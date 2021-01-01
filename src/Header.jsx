@@ -62,6 +62,7 @@ export default class Header extends Component {
     console.log("closed");
   };
   render() {
+    let loaderArr = [1,2,3,4,5]
     return (
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
@@ -168,7 +169,9 @@ export default class Header extends Component {
                                       ) : e.type === "text" ? (
                                         <div key={e.type} className="relative mb-1 mt-2 text-center text-gray-400 text-xs font-semibold">{e.text}</div>
                                       ) : (
-                                        <div key={e.type} className="text-centertext-sm"><Oval color="white" secondaryColor="#9ca3af" width="2Opx" height="20px" /></div>
+                                        <div>
+                                          {loaderArr.map(f => <div key={f} className="text-centertext-sm rounded-sm bg-gray-400 h-6 my-2 mx-4"></div>)}
+                                        </div>
                                       )
                                     }
                                   </Menu.Item>
