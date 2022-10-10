@@ -3,6 +3,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: GoodTime;
+  src: url('/GoodTiming.ttf') format('opentype');
+}
+
 body {
   font: 14px Poppins, Futura, sans-serif;
+  color: white;
+}
+
+.text-goodtime {
+  font-family: GoodTime;
 }
