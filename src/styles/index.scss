@@ -3,10 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: GoodTime;
-  src: url('/GoodTiming.ttf') format('opentype');
+  src: url("/GoodTiming.ttf") format("opentype");
 }
 
 body {
@@ -16,4 +15,9 @@ body {
 
 .text-goodtime {
   font-family: GoodTime;
+}
+
+.text-shadow-white {
+  text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 1px 1px #fff,
+    -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
 }

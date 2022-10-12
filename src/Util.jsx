@@ -9,7 +9,7 @@ export class PrimaryButton extends Component {
     e.target.style.setProperty("--y", e.clientY - y);
   };
   render() {
-    const className = this.props.className + " relative btn-primary rounded-[4px] py-2 px-4 inline-flex items-center justify-center text-white"
+    const className = this.props.className + " relative text-lg btn-primary rounded-[4px] py-[10px] px-6 inline-flex items-center justify-center text-white"
     return (
       <>
         {this.props.type === "link" ? (
@@ -46,7 +46,7 @@ export class PrimaryButton extends Component {
 
 export class SecondaryButton extends Component {
   render() {
-    const className = this.props.className + " relative btn-secondary rounded-[4px] py-2 px-4 inline-flex items-center justify-center text-black"
+    const className = this.props.className + " relative text-lg btn-secondary rounded-[4px] py-[10px] px-6 inline-flex items-center justify-center text-black"
     return (
       <>
         {this.props.type === "link" ? (

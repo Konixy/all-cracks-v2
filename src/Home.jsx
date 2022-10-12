@@ -5,10 +5,10 @@ import { PrimaryButton, SecondaryButton } from "./Util";
 export default class Home extends Component {
   render() {
     return (
-      <div className="container items-center text-center my-20">
+      <div className="container items-center text-center my-20 mx-10">
         <div>
-          <h1 className="text-2xl">Touts vos jeux préférés, gratuits et téléchargable en un seul click !</h1>
-          <div className="mt-4">
+          <h1 className="text-2xl text-left max-w-md">Touts vos jeux préférés, gratuits et téléchargable en un seul <span className="text-blue-500 underline">click</span><i className="fa-solid fa-arrow-pointer absolute translate-y-5 -translate-x-3 text-black text-shadow-white"></i> !</h1>
+          <div className="mt-10">
             <PrimaryButton href="/games" type="link" className="mr-4">
               Voir tout les jeux
             </PrimaryButton>
