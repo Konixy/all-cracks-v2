@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import config from "./config";
 
 export default class Games extends Component {
   constructor() {
@@ -7,6 +8,14 @@ export default class Games extends Component {
     this.state = {
       games: [],
     };
+  }
+  componentDidMount() {
+    this.loadGames()
+  }
+  loadGames = () => {
+    fetch(`${config.backendPath}/api/games`)
+    .then(r => r.jspn())
+    .then(r => console.log(r))
   }
   render() {
     return (
