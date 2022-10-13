@@ -3,6 +3,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import config from "./config";
+import axios from "axios";
+import { Oval } from "react-loader-spinner"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -22,7 +24,8 @@ export default class Header extends Component {
           dropdownItems: [
             { type: "link", name: "Tout les jeux", href: "/games" },
             { type: "hr" },
-            { type: "link", name: "test2", href: "test2" },
+            { type: "text", text: "Dernières sorties" },
+            { type: "loader" },
           ],
         },
         {
@@ -40,6 +43,19 @@ export default class Header extends Component {
     if (value.length <= 0) return this.closeSearch();
     else this.openSearch(input);
   };
+  fetchGames = async () => {
+    const request = await axios.get(`${config.backendPath}/api/header/games`)
+    const dropdownItems = this.state.nav.find(e => e.name === "Jeux").dropdownItems;
+    dropdownItems.pop()
+    console.log(request.data.games)
+    request.data.games.forEach(e => {
+      dropdownItems.push({type: "link", name: e.name, href: "/game/" + e._id})
+    })
+    this.setState(this.state);
+  }
+  componentDidMount() {
+    this.fetchGames();
+  }
   openSearch = (input) => {
     console.log('openned with "%s"', input.target.value);
   };
@@ -148,8 +164,12 @@ export default class Header extends Component {
                                         >
                                           {e.name}
                                         </Link>
+                                      ) : e.type === "hr" ? (
+                                        <div key={e.type} className="relative mx-3 mt-2 rounded-sm border-b-gray-400 border-b-[1px]"></div>
+                                      ) : e.type === "text" ? (
+                                        <div key={e.type} className="relative mb-1 mt-2 text-center text-gray-500 text-xs font-semibold">{e.text}</div>
                                       ) : (
-                                        <div key={e.name} className="relative mx-3 my-1 rounded-sm border-b-gray-400 border-b-[1px]"></div>
+                                        <div key={e.type} className="text-centertext-sm"><Oval color="white" secondaryColor="#9ca3af" width="2Opx" height="20px" /></div>
                                       )
                                     }
                                   </Menu.Item>

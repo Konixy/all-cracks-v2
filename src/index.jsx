@@ -6,14 +6,18 @@ import Home from "./Home";
 import Header from "./Header";
 import Footer from "./Footer";
 import Games from "./Games";
+import Game, { OnGameLoad } from "./Game";
 
 const routes = [
-  { path: "/", element: Home, withHeader: true, withFooter: true },
+  { path: "/", element: Home },
   {
     path: "/games",
     element: Games,
-    withHeader: true,
-    withFooter: true,
+  },
+  {
+    path: "/game/:gameId",
+    element: Game,
+    onLoad: OnGameLoad,
   },
 ];
 
@@ -24,19 +28,29 @@ class App extends React.Component {
         <Routes>
           {routes.map((route) => (
             <Route
-              key={route.path}
+              key={route}
               exact
               path={route.path}
+              loader={route.onLoad ? route.onLoad : undefined}
               element={
                 <>
-                  {route.withHeader ? <Header path={route.path} /> : <></>}
+                  {route.noHeader ? <></> : <Header path={route.path} />}
                   <route.element />
-                  {route.withFooter ? <Footer /> : <></>}
+                  {route.noFooter ? <></> : <Footer />}
                 </>
               }
             />
           ))}
-          <Route path="*" element={<><Header />404<Footer /></>} />
+          <Route
+            path="*"
+            element={
+              <>
+                <Header />
+                404
+                <Footer />
+              </>
+            }
+          />
         </Routes>
       </Router>
     );
