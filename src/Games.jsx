@@ -14,8 +14,10 @@ export default class Games extends Component {
   }
   loadGames = () => {
     fetch(`${config.backendPath}/api/games`)
-    .then(r => r.jspn())
-    .then(r => console.log(r))
+    .then(r => r.json())
+    .then(r => {
+      this.setState({games: r.games});
+    })
   }
   render() {
     return (
@@ -23,7 +25,7 @@ export default class Games extends Component {
         <div className="container">
           {this.state.games.length > 0 ? (
             this.state.games.map(e => (
-              <div className="game" key={e.name}><Link to={e.href} className="text-md">e.name</Link></div>
+              <div className="game" key={e.name}><Link to={`/game/${e._id}`} className="text-md">{e.name}</Link></div>
             ))
           ) : (
             <>{"Games are loading"}</>

@@ -47,7 +47,6 @@ export default class Header extends Component {
     const request = await axios.get(`${config.backendPath}/api/header/games`)
     const dropdownItems = this.state.nav.find(e => e.name === "Jeux").dropdownItems;
     dropdownItems.pop()
-    console.log(request.data.games)
     request.data.games.forEach(e => {
       dropdownItems.push({type: "link", name: e.name, href: "/game/" + e._id})
     })
@@ -165,9 +164,9 @@ export default class Header extends Component {
                                           {e.name}
                                         </Link>
                                       ) : e.type === "hr" ? (
-                                        <div key={e.type} className="relative mx-3 mt-2 rounded-sm border-b-gray-400 border-b-[1px]"></div>
+                                        <div key={e.type} className="relative mx-3 mt-2 rounded-sm border-b-gray-500 border-b-[1px]"></div>
                                       ) : e.type === "text" ? (
-                                        <div key={e.type} className="relative mb-1 mt-2 text-center text-gray-500 text-xs font-semibold">{e.text}</div>
+                                        <div key={e.type} className="relative mb-1 mt-2 text-center text-gray-400 text-xs font-semibold">{e.text}</div>
                                       ) : (
                                         <div key={e.type} className="text-centertext-sm"><Oval color="white" secondaryColor="#9ca3af" width="2Opx" height="20px" /></div>
                                       )
