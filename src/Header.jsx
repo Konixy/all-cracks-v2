@@ -4,7 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import config from "./config";
 import axios from "axios";
-import { Oval } from "react-loader-spinner"
+import ContentLoader from "react-content-loader";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -13,10 +13,10 @@ function classNames(...classes) {
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.props = props
+    this.props = props;
     this.state = {
       nav: [
-        { name: "Acceuil", type: "link", href: "/"},
+        { name: "Acceuil", type: "link", href: "/" },
         {
           name: "Jeux",
           type: "dropdown",
@@ -33,7 +33,7 @@ export default class Header extends Component {
           type: "href",
           href: config.discordInvite,
         },
-        { name: "DMCA", type: "link", href: "/dmca"},
+        { name: "DMCA", type: "link", href: "/dmca" },
       ],
     };
   }
@@ -44,14 +44,20 @@ export default class Header extends Component {
     else this.openSearch(input);
   };
   fetchGames = async () => {
-    const request = await axios.get(`${config.backendPath}/api/header/games`)
-    const dropdownItems = this.state.nav.find(e => e.name === "Jeux").dropdownItems;
-    dropdownItems.pop()
-    request.data.games.forEach(e => {
-      dropdownItems.push({type: "link", name: e.name, href: "/game/" + e._id})
-    })
+    const request = await axios.get(`${config.backendPath}/api/header/games`);
+    const dropdownItems = this.state.nav.find(
+      (e) => e.name === "Jeux"
+    ).dropdownItems;
+    dropdownItems.pop();
+    request.data.games.forEach((e) => {
+      dropdownItems.push({
+        type: "link",
+        name: e.name,
+        href: "/game/" + e._id,
+      });
+    });
     this.setState(this.state);
-  }
+  };
   componentDidMount() {
     this.fetchGames();
   }
@@ -62,7 +68,6 @@ export default class Header extends Component {
     console.log("closed");
   };
   render() {
-    let loaderArr = [1,2,3,4,5]
     return (
       <Disclosure as="nav" className="bg-gray-800">
         {({ open }) => (
@@ -104,7 +109,9 @@ export default class Header extends Component {
                                 : "text-gray-400 hover:text-white",
                               "px-3 py-2 rounded-md text-base font-medium transition-all",
                             ].join(" ")}
-                            aria-current={this.props.path === item.href ? "page" : undefined}
+                            aria-current={
+                              this.props.path === item.href ? "page" : undefined
+                            }
                           >
                             {item.name}
                           </a>
@@ -118,7 +125,9 @@ export default class Header extends Component {
                                 : "text-gray-400 hover:text-white",
                               "px-3 py-2 rounded-md text-base font-medium transition-all",
                             ].join(" ")}
-                            aria-current={this.props.path === item.href ? "page" : undefined}
+                            aria-current={
+                              this.props.path === item.href ? "page" : undefined
+                            }
                           >
                             {item.name}
                           </Link>
@@ -149,7 +158,7 @@ export default class Header extends Component {
                               leaveFrom="transform opacity-100 scale-100"
                               leaveTo="transform opacity-0 scale-95"
                             >
-                              <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-center rounded-md bg-gray-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              <Menu.Items className="absolute -right-[50%] translate-x-[10px] z-10 mt-2 w-48 origin-center rounded-md bg-gray-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 {item.dropdownItems.map((e) => (
                                   <Menu.Item key={e.name}>
                                     {({ active }) =>
@@ -159,19 +168,39 @@ export default class Header extends Component {
                                           to={e.href}
                                           className={classNames(
                                             active ? "bg-gray-600" : "",
-                                            "block px-3 mx-2 rounded-md py-2 my-1 text-sm text-white"
+                                            "block px-3 mx-2 rounded-md py-2 my-1 text-sm text-white text-ellipsis overflow-hidden whitespace-nowrap select-none"
                                           )}
                                         >
                                           {e.name}
                                         </Link>
                                       ) : e.type === "hr" ? (
-                                        <div key={e.type} className="relative mx-3 mt-2 rounded-sm border-b-gray-500 border-b-[1px]"></div>
+                                        <div
+                                          key={e.type}
+                                          className="relative mx-3 mt-2 rounded-sm border-b-gray-500 border-b-[1px]"
+                                        ></div>
                                       ) : e.type === "text" ? (
-                                        <div key={e.type} className="relative mb-1 mt-2 text-center text-gray-400 text-xs font-semibold">{e.text}</div>
-                                      ) : (
-                                        <div>
-                                          {loaderArr.map(f => <div key={f} className="text-centertext-sm rounded-sm bg-gray-400 h-6 my-2 mx-4"></div>)}
+                                        <div
+                                          key={e.type}
+                                          className="relative mb-1 mt-2 text-center text-gray-400 text-xs font-semibold"
+                                        >
+                                          {e.text}
                                         </div>
+                                      ) : (
+                                        <ContentLoader 
+                                          speed={2}
+                                          width={192}
+                                          height={200}
+                                          viewBox="0 0 192 200"
+                                          backgroundColor="#4b5563"
+                                          foregroundColor="#6b7280"
+                                          className="px-3 relative outline-none"
+                                        >
+                                          <rect x="0" y="0" rx="8" ry="8" width="190" height="30" className="mt-2" />
+                                          <rect x="0" y="40" rx="8" ry="8" width="190" height="30" className="mt-2" />
+                                          <rect x="0" y="80" rx="8" ry="8" width="190" height="30" className="mt-2" />
+                                          <rect x="0" y="120" rx="8" ry="8" width="190" height="30" className="mt-2" />
+                                          <rect x="0" y="160" rx="8" ry="8" width="190" height="30" className="mt-2" />
+                                        </ContentLoader>
                                       )
                                     }
                                   </Menu.Item>
@@ -281,7 +310,9 @@ export default class Header extends Component {
                         : "text-gray-300 hover:text-white",
                       "block px-3 py-2 rounded-md text-base font-medium transition-all",
                     ].join(" ")}
-                    aria-current={this.props.path === item.href ? "page" : undefined}
+                    aria-current={
+                      this.props.path === item.href ? "page" : undefined
+                    }
                   >
                     {item.name}
                   </Disclosure.Button>
@@ -512,4 +543,4 @@ export function Nav() {
       </div>
     </div>
   );
-};
+}

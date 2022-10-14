@@ -36,7 +36,7 @@ export default function Game() {
     <main className="text-center my-20">
       <div className="text-lg mb-10">{game.name}</div>
       <div className="text-sm mx-40">{game.description}</div>
-      <div className="text-md mx-40 mt-10"><Md>{game.tutorial}</Md></div>
+      <div className="text-md mx-40 mt-10" dangerouslySetInnerHTML={{__html: game.tutorial.replace(/\n/gm, '<br/>')}}></div>
     </main>
   )
 }
