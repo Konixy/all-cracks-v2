@@ -44,19 +44,29 @@ export default class Header extends Component {
     else this.openSearch(input);
   };
   fetchGames = async () => {
-    const request = await axios.get(`${config.backendPath}/api/header/games`);
-    const dropdownItems = this.state.nav.find(
-      (e) => e.name === "Jeux"
-    ).dropdownItems;
-    dropdownItems.pop();
-    request.data.games.forEach((e) => {
-      dropdownItems.push({
-        type: "link",
-        name: e.name,
-        href: "/game/" + e._id,
+    axios.get(`${config.backendPath}/api/header/games`)
+    .then(response => {
+      const dropdownItems = this.state.nav.find(
+        (e) => e.name === "Jeux"
+      ).dropdownItems;
+      dropdownItems.pop();
+      response.data.games.forEach((e) => {
+        dropdownItems.push({
+          type: "link",
+          name: e.name,
+          href: "/game/" + e._id,
+        });
       });
-    });
-    this.setState(this.state);
+      this.setState(this.state);
+    }).catch(e => {
+      console.log('failed to fetch')
+      const dropdownItems = this.state.nav.find(
+        (e) => e.name === "Jeux"
+      ).dropdownItems;
+      dropdownItems.pop();
+      dropdownItems.push({type: "error"})
+      this.setState(this.state)
+    })
   };
   componentDidMount() {
     this.fetchGames();
@@ -185,7 +195,7 @@ export default class Header extends Component {
                                         >
                                           {e.text}
                                         </div>
-                                      ) : (
+                                      ) : e.type === "loader" ? (
                                         <ContentLoader 
                                           speed={2}
                                           width={192}
@@ -201,6 +211,8 @@ export default class Header extends Component {
                                           <rect x="0" y="120" rx="8" ry="8" width="190" height="30" className="mt-2" />
                                           <rect x="0" y="160" rx="8" ry="8" width="190" height="30" className="mt-2" />
                                         </ContentLoader>
+                                      ) : (
+                                        <div key={e.type} className="px-3 my-2 text-center"><i className="fa-solid fa-warning text-lg text-orange-400"></i> Connexion impossible</div>
                                       )
                                     }
                                   </Menu.Item>
