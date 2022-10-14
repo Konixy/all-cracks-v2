@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import { useParams } from "react-router-dom"
 import config from "./config";
 import axios from "axios"
+import Md from 'react-markdown'
 
 export function OnGameLoad() {
   setTimeout(() => {
@@ -35,6 +36,7 @@ export default function Game() {
     <main className="text-center my-20">
       <div className="text-lg mb-10">{game.name}</div>
       <div className="text-sm mx-40">{game.description}</div>
+      <div className="text-md mx-40 mt-10"><Md>{game.tutorial.replace(/(<|<\/)+strong>/gm, "**").replace(/(<|<\/)+em>/gm, '*').replace(/\n/gm, "\\&nbsp;")}</Md></div>
     </main>
   )
 }
