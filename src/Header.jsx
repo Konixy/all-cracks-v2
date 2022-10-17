@@ -370,7 +370,7 @@ export function Nav() {
               Company
             </span>
           </a>
-          <ul class="flex items-center hidden space-x-8 lg:flex">
+          <ul class="flex items-center space-x-8 lg:flex">
             <li>
               <a
                 href="/"
@@ -412,7 +412,7 @@ export function Nav() {
               </a>
             </li>
           </ul>
-          <ul class="flex items-center hidden space-x-8 lg:flex">
+          <ul class="flex items-center space-x-8 lg:flex">
             <li>
               <a
                 href="/"

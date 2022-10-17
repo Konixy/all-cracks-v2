@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import { useParams } from "react-router-dom"
 import config from "./config";
 import axios from "axios"
-import Md from 'react-markdown'
+// import Md from 'react-markdown'
 
 export function OnGameLoad() {
   setTimeout(() => {
