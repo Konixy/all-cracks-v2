@@ -5,7 +5,7 @@ import "./styles/index.scss";
 import Home from "./Home";
 import Header from "./Header";
 import Footer from "./Footer";
-import Games from "./Games";
+import Games from "./Games.tsx";
 import Game, { OnGameLoad } from "./Game";
 
 const routes = [

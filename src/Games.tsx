@@ -3,34 +3,66 @@ import { Link } from "react-router-dom";
 import config from "./config";
 import ContentLoader from "react-content-loader";
 import Tilt from "react-tilted";
+import axios, { AxiosResponse } from "axios"
+
+interface Game {
+  _id: string,
+  name: string,
+  releaseDate: string,
+  lastUpdate: string,
+  description?: string,
+  tutorial?: string,
+  bgUrl?: string,
+  coverUrl?: string,
+  videoId?: string,
+  crackDlLink?: string,
+  crackDlSize?: string,
+  crackDlLinkType?: string,
+  isOnline?: string,
+  additionalLinks: AdditionnalLink[]
+}
+
+interface AdditionnalLink {
+  name: string,
+  link: string,
+  linkType?: "rar" | "torrent"
+}
+
+interface APIResponse {
+  games: Game[]
+}
+
+interface State {
+  index: number,
+  games: Game[]
+}
 
 export default class Games extends Component {
-  constructor() {
-    super();
+  state: State;
+  constructor(props: {} | Readonly<{}>) {
+    super(props)
     this.state = {
-      games: [],
       index: 0,
-    };
+      games: []
+    }
   }
   componentDidMount() {
     this.loadGames();
   }
   loadGames = () => {
-    fetch(`${config.backendPath}/api/games`)
-      .then((r) => r.json())
-      .then((r) => {
-        this.setState({ games: r.games });
+    axios.get(`${config.backendPath}/api/games`)
+      .then((r: AxiosResponse<APIResponse>) => {
+        this.setState({ games: r.data.games });
       });
   };
-  sortGames = () => {
-    let newGames = [];
+  sortGames = (): Game[] => {
+    let newGames: Game[] = [];
     this.state.games.sort(
       (a, b) =>
         new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
     );
     for (let i = this.state.index; i < this.state.index + 10; i++) {
-      if (!this.state.games[i]) return;
-      newGames.push(this.state.games[i]);
+      if (this.state.games[i]) newGames.push(this.state.games[i]);
     }
     return newGames;
   };
