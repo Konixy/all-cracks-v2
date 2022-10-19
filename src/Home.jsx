@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import config from "./config";
-import { PrimaryButton, SecondaryButton } from "./Util";
+import { PrimaryButton, SecondaryButton } from "./Util.tsx";
 
 export default class Home extends Component {
   render() {
