@@ -101,14 +101,13 @@ export default class Games extends Component {
                     <Link to={`/game/${e._id}`} className="text-lg">
                       {e.name}
                     </Link>
-                    <p className="text-sm mt-4 text">{e.description}</p>
+                    <p className="text-sm mt-4 text text-ellipsis">{e.description}</p>
                   </div>
                 </div>
               ))
             : this.sortLoader().map((e) => (
-                <div className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5 ">
+                <div className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5" key={e}>
                   <ContentLoader
-                    key={e}
                     speed={2}
                     width={loaderParams.width}
                     height={loaderParams.height}

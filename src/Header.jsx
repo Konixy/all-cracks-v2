@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import config from "./config";
 import axios from "axios";
 import ContentLoader from "react-content-loader";
+import Search from "./Search";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -37,46 +38,36 @@ export default class Header extends Component {
       ],
     };
   }
-  searchInput = (input) => {
-    const value = input.target.value;
-
-    if (value.length <= 0) return this.closeSearch();
-    else this.openSearch(input);
-  };
   fetchGames = async () => {
-    axios.get(`${config.backendPath}/api/header/games`)
-    .then(response => {
-      const dropdownItems = this.state.nav.find(
-        (e) => e.name === "Jeux"
-      ).dropdownItems;
-      dropdownItems.pop();
-      response.data.games.forEach((e) => {
-        dropdownItems.push({
-          type: "link",
-          name: e.name,
-          href: "/game/" + e._id,
+    axios
+      .get(`${config.backendPath}/api/header/games`)
+      .then((response) => {
+        const dropdownItems = this.state.nav.find(
+          (e) => e.name === "Jeux"
+        ).dropdownItems;
+        dropdownItems.pop();
+        response.data.games.forEach((e) => {
+          dropdownItems.push({
+            type: "link",
+            name: e.name,
+            href: "/game/" + e._id,
+          });
         });
+        this.setState(this.state);
+      })
+      .catch((e) => {
+        console.log("failed to fetch");
+        const dropdownItems = this.state.nav.find(
+          (e) => e.name === "Jeux"
+        ).dropdownItems;
+        dropdownItems.pop();
+        dropdownItems.push({ type: "error" });
+        this.setState(this.state);
       });
-      this.setState(this.state);
-    }).catch(e => {
-      console.log('failed to fetch')
-      const dropdownItems = this.state.nav.find(
-        (e) => e.name === "Jeux"
-      ).dropdownItems;
-      dropdownItems.pop();
-      dropdownItems.push({type: "error"})
-      this.setState(this.state)
-    })
   };
   componentDidMount() {
     this.fetchGames();
   }
-  openSearch = (input) => {
-    console.log('openned with "%s"', input.target.value);
-  };
-  closeSearch = () => {
-    console.log("closed");
-  };
   render() {
     return (
       <Disclosure as="nav" className="bg-gray-800">
@@ -196,7 +187,7 @@ export default class Header extends Component {
                                           {e.text}
                                         </div>
                                       ) : e.type === "loader" ? (
-                                        <ContentLoader 
+                                        <ContentLoader
                                           speed={2}
                                           width={192}
                                           height={200}
@@ -205,14 +196,60 @@ export default class Header extends Component {
                                           foregroundColor="#6b7280"
                                           className="px-3 relative outline-none"
                                         >
-                                          <rect x="0" y="0" rx="8" ry="8" width="190" height="30" className="mt-2" />
-                                          <rect x="0" y="40" rx="8" ry="8" width="190" height="30" className="mt-2" />
-                                          <rect x="0" y="80" rx="8" ry="8" width="190" height="30" className="mt-2" />
-                                          <rect x="0" y="120" rx="8" ry="8" width="190" height="30" className="mt-2" />
-                                          <rect x="0" y="160" rx="8" ry="8" width="190" height="30" className="mt-2" />
+                                          <rect
+                                            x="0"
+                                            y="0"
+                                            rx="8"
+                                            ry="8"
+                                            width="190"
+                                            height="30"
+                                            className="mt-2"
+                                          />
+                                          <rect
+                                            x="0"
+                                            y="40"
+                                            rx="8"
+                                            ry="8"
+                                            width="190"
+                                            height="30"
+                                            className="mt-2"
+                                          />
+                                          <rect
+                                            x="0"
+                                            y="80"
+                                            rx="8"
+                                            ry="8"
+                                            width="190"
+                                            height="30"
+                                            className="mt-2"
+                                          />
+                                          <rect
+                                            x="0"
+                                            y="120"
+                                            rx="8"
+                                            ry="8"
+                                            width="190"
+                                            height="30"
+                                            className="mt-2"
+                                          />
+                                          <rect
+                                            x="0"
+                                            y="160"
+                                            rx="8"
+                                            ry="8"
+                                            width="190"
+                                            height="30"
+                                            className="mt-2"
+                                          />
                                         </ContentLoader>
                                       ) : (
-                                        <div key={e.type} className="px-3 my-2 text-center"><i className="fa-solid fa-warning text-lg text-orange-400"></i> Connexion impossible</div>
+                                        <div
+                                          key={e.type}
+                                          className="px-3 my-2 text-center"
+                                        >
+                                          <i className="fa-solid fa-warning text-lg text-orange-400"></i>{" "}
+                                          Connexion impossible
+                                        </div>
                                       )
                                     }
                                   </Menu.Item>
@@ -226,18 +263,7 @@ export default class Header extends Component {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:flex sm:relative">
-                  <div className="relative mt-3">
-                    <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none text-gray-500">
-                      <i className="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <input
-                      type="text"
-                      id="search-navbar"
-                      className="block p-2 pl-8 w-full rounded-lg border sm:text-sm bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:ring-1 focus:border-blue-500 outline-none transition-all"
-                      placeholder="Search..."
-                      onInput={this.searchInput}
-                    />
-                  </div>
+                  <Search />
 
                   {/* Profile dropdown */}
                   {/* <Menu as="div" className="relative ml-3">

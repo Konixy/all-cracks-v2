@@ -2,8 +2,6 @@ import React, { Component, MouseEvent } from "react";
 import "./styles/Buttons.scss";
 import { Link } from "react-router-dom";
 
-document.querySelector(".zebi")?.addEventListener("input", e => {})
-
 interface Props {
   type: string,
   props: React.HTMLProps<HTMLButtonElement | HTMLLinkElement>
