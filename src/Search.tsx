@@ -12,6 +12,10 @@ import { Oval } from "react-loader-spinner";
 
 const searchClient = algoliasearch(config.searchId, config.searchKey);
 
+interface SubmitElement extends FormEvent<HTMLFormElement> {
+  target: eventTarget;
+}
+
 interface inputEvent extends FormEvent<HTMLInputElement> {
   target: HTMLInputElement;
 }
@@ -31,14 +35,16 @@ interface Hit {
 export default function Search() {
   const [state, setState] = useState<boolean>(false);
   const [params, setParams] = useSearchParams();
-  function submitSearch(input: inputEvent) {
-    const value = input.target?.value
+  function submitSearch(event: SubmitElement) {
+    const value = event.target?.value
 
-    if(value.length <= 0) return closeSearch();
-    else redirect("")
+    if(value) {
+      if(value.length <= 0) return closeSearch();
+    }
+    redirect("")
   }
-  function searchInput(input: inputEvent) {
-    const value = input.target?.value;
+  function searchInput(event: inputEvent) {
+    const value = event.target?.value;
 
     if (value.length <= 0) return closeSearch();
     else openSearch(value);

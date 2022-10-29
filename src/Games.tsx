@@ -3,54 +3,58 @@ import { Link } from "react-router-dom";
 import config from "./config";
 import ContentLoader from "react-content-loader";
 import Tilt from "react-tilted";
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios";
+import { classNames } from "./Util";
 
 interface Game {
-  _id: string,
-  name: string,
-  releaseDate: string,
-  lastUpdate: string,
-  description?: string,
-  tutorial?: string,
-  bgUrl?: string,
-  coverUrl?: string,
-  videoId?: string,
-  crackDlLink?: string,
-  crackDlSize?: string,
-  crackDlLinkType?: string,
-  isOnline?: string,
-  additionalLinks: AdditionnalLink[]
+  _id: string;
+  name: string;
+  release: string;
+  releaseDate: string;
+  lastUpdate: string;
+  lastUpdateDate: string;
+  description?: string;
+  tutorial?: string;
+  bgUrl?: string;
+  coverUrl?: string;
+  videoId?: string;
+  crackDlLink?: string;
+  crackDlSize?: string;
+  crackDlLinkType?: string;
+  isOnline?: string;
+  additionalLinks: AdditionnalLink[];
 }
 
 interface AdditionnalLink {
-  name: string,
-  link: string,
-  linkType?: "rar" | "torrent"
+  name: string;
+  link: string;
+  linkType?: "rar" | "torrent";
 }
 
 interface APIResponse {
-  games: Game[]
+  games: Game[];
 }
 
 interface State {
-  index: number,
-  games: Game[]
+  index: number;
+  games: Game[];
 }
 
 export default class Games extends Component {
   state: State;
   constructor(props: {} | Readonly<{}>) {
-    super(props)
+    super(props);
     this.state = {
       index: 0,
-      games: []
-    }
+      games: [],
+    };
   }
   componentDidMount() {
     this.loadGames();
   }
   loadGames = () => {
-    axios.get(`${config.backendPath}/api/games`)
+    axios
+      .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {
         this.setState({ games: r.data.games });
       });
@@ -83,30 +87,89 @@ export default class Games extends Component {
                   className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
                   key={e.name}
                 >
-                  <div>
-                    <Link to={`/game/${e._id}`}>
+                  <div className="block w-[180px]">
+                    <Link to={`/game/${e._id}`} className="w-[180px]">
                       <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
                         <img
                           src={e.coverUrl}
                           alt={e.name}
                           width="180px"
                           height="240px"
-                          className="rounded-lg game-card-img tilt w-[850px] h-[240px]"
+                          className="relative rounded-lg game-card-img tilt w-[180px] h-[240px]"
                           data-tilt
                         />
                       </Tilt>
                     </Link>
                   </div>
-                  <div className="flex flex-col mx-10 my-6">
+                  <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
                     <Link to={`/game/${e._id}`} className="text-lg">
                       {e.name}
                     </Link>
-                    <p className="text-sm mt-4 text text-ellipsis">{e.description}</p>
+                    <p className="text-sm text-description">{e.description}</p>
+                    <div className="badges flex flex-row justify-evenly">
+                      {e.release ? (
+                        <span
+                          className="badge text-bg-light text-dark gameBadge"
+                          data-bs-toggle="tooltip"
+                          data-bs-title="Date de sortie du jeu"
+                        >
+                          <i className="fa-solid fa-clock mr-2"></i>
+                          {e.release}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {e.lastUpdate ? (
+                        <span
+                          className="badge text-bg-light text-dark gameBadge"
+                          data-bs-toggle="tooltip"
+                          data-bs-title="Dernière mise a jour"
+                        >
+                          <i className="fa-solid fa-arrows-rotate mr-2"></i>
+                          {e.lastUpdate}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {e.crackDlSize ? (
+                        <span
+                          className="badge text-bg-light text-dark gameBadge"
+                          data-bs-toggle="tooltip"
+                          data-bs-title="Taille du jeu une fois installé"
+                        >
+                          <i className="fa-solid fa-folder mr-2"></i>
+                          {e.crackDlSize}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      <span
+                        className="badge text-bg-light text-dark gameBadge"
+                        data-bs-toggle="tooltip"
+                        data-bs-title={
+                          e.isOnline === "true"
+                            ? "Le jeu est disponible en multijoueur"
+                            : "Le jeu n'est accessible qu'en solo"
+                        }
+                      >
+                        <i
+                          className={classNames(
+                            "fa-solid mr-2",
+                            e.isOnline === "true" ? "fa-user-group" : "fa-user"
+                          )}
+                        ></i>
+                        {e.isOnline === "true" ? "Multijoueur" : "Solo"}
+                      </span>
+                      {/* user ? <a href="/admin/edit/${e._id" className="editGame text-light"><i className="fa-solid fa-gear"></i></a> : "" */}
+                    </div>
                   </div>
                 </div>
               ))
             : this.sortLoader().map((e) => (
-                <div className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5" key={e}>
+                <div
+                  className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
+                  key={e}
+                >
                   <ContentLoader
                     speed={2}
                     width={loaderParams.width}

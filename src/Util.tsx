@@ -7,6 +7,10 @@ interface Props {
   props: React.HTMLProps<HTMLButtonElement | HTMLLinkElement>
 }
 
+export function classNames(...classes: string[]): string {
+  return classes.filter(Boolean).join(" ");
+}
+
 export class PrimaryButton extends Component {
   type: string;
   props: React.HTMLProps<HTMLButtonElement | HTMLLinkElement>;

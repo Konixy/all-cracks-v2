@@ -35,7 +35,7 @@ export default function Game() {
     return <div className="text-center text-lg my-20">Chargement...</div>;
   return (
     <div className="container">
-      <img src={game.bgUrl.replace("screenshot_med", "original")} alt={game.name} className="bg-fixed absolute -z-10 top-0 w-full" />
+      <img src={game.bgUrl.replace("screenshot_med", "screenshot_huge")} alt={game.name} className="bg-fixed absolute -z-10 top-0 w-full" />
       <main className="text-center my-20">
         <div className="text-lg mb-10">{game.name}</div>
         <div className="text-sm mx-40">{game.description}</div>

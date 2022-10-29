@@ -6,10 +6,7 @@ import config from "./config";
 import axios from "axios";
 import ContentLoader from "react-content-loader";
 import Search from "./Search";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "./Util";
 
 export default class Header extends Component {
   constructor(props) {
@@ -195,6 +192,7 @@ export default class Header extends Component {
                                           backgroundColor="#4b5563"
                                           foregroundColor="#6b7280"
                                           className="px-3 relative outline-none"
+                                          key={e.name}
                                         >
                                           <rect
                                             x="0"
