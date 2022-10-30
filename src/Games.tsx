@@ -76,73 +76,68 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                 <p className="text-sm text-description">{e.description}</p>
                 <div className="badges flex flex-row justify-evenly">
                   {e.release ? (
-  <Tooltip content="Date de sortie du jeu">
-    <span
-      className={badgeStyle.badge}
-    >
-      <i
-        className={classNames(
-          badgeStyle.icon,
-          "fa-clock"
-        )}
-      ></i>
-      {e.release}
-    </span>
-  </Tooltip>
-) : (
-  ""
-)}
-{e.lastUpdate ? (
-  <span
-    className={badgeStyle.badge}
-    data-bs-toggle="tooltip"
-    data-bs-title="Dernière mise a jour"
-  >
-    <i
-      className={classNames(
-        badgeStyle.icon,
-        "fa-arrows-rotate mr-2"
-      )}
-    ></i>
-    {e.lastUpdate}
-  </span>
-) : (
-  ""
-)}
-{e.crackDlSize ? (
-  <span
-    className={badgeStyle.badge}
-    data-bs-toggle="tooltip"
-    data-bs-title="Taille du jeu une fois installé"
-  >
-    <i
-      className={classNames(
-        badgeStyle.icon,
-        "fa-folder mr-2"
-      )}
-    ></i>
-    {e.crackDlSize}
-  </span>
-) : (
-  ""
-)}
-<span
-  className={badgeStyle.badge}
-  data-bs-toggle="tooltip"
-  data-bs-title={
-    e.isOnline === "true"
-      ? "Le jeu est disponible en multijoueur"
-      : "Le jeu n'est accessible qu'en solo"
-  }
->
-  <i
-    className={classNames(
-      badgeStyle.icon,
-      e.isOnline === "true" ? "fa-user-group" : "fa-user"
-    )}
-  ></i>
-  {e.isOnline === "true" ? "Multijoueur" : "Solo"}
-</span>
+                    <Tooltip content="Date de sortie du jeu">
+                      <span className={badgeStyle.badge}>
+                        <i
+                          className={classNames(badgeStyle.icon, "fa-clock")}
+                        ></i>
+                        {e.release}
+                      </span>
+                    </Tooltip>
+                  ) : (
+                    ""
+                  )}
+                  {e.lastUpdate ? (
+                    <span
+                      className={badgeStyle.badge}
+                      data-bs-toggle="tooltip"
+                      data-bs-title="Dernière mise a jour"
+                    >
+                      <i
+                        className={classNames(
+                          badgeStyle.icon,
+                          "fa-arrows-rotate mr-2"
+                        )}
+                      ></i>
+                      {e.lastUpdate}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  {e.crackDlSize ? (
+                    <span
+                      className={badgeStyle.badge}
+                      data-bs-toggle="tooltip"
+                      data-bs-title="Taille du jeu une fois installé"
+                    >
+                      <i
+                        className={classNames(
+                          badgeStyle.icon,
+                          "fa-folder mr-2"
+                        )}
+                      ></i>
+                      {e.crackDlSize}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  <span
+                    className={badgeStyle.badge}
+                    data-bs-toggle="tooltip"
+                    data-bs-title={
+                      e.isOnline === "true"
+                        ? "Le jeu est disponible en multijoueur"
+                        : "Le jeu n'est accessible qu'en solo"
+                    }
+                  >
+                    <i
+                      className={classNames(
+                        badgeStyle.icon,
+                        e.isOnline === "true" ? "fa-user-group" : "fa-user"
+                      )}
+                    ></i>
+                    {e.isOnline === "true" ? "Multijoueur" : "Solo"}
+                  </span>
                   {/* user ? <a href="/admin/edit/${e._id" className="editGame text-light"><i className="fa-solid fa-gear"></i></a> : "" */}
                 </div>
               </div>
