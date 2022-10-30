@@ -85,10 +85,10 @@ export default class Header extends Component {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center justify-center text-white text-goodtime text-2xl">
-                    <Link to="/" className="block h-8 w-auto lg:hidden">
+                    <Link to="/" className="block h-8 w-auto lg:hidden select-none">
                       All-Cracks.fr
                     </Link>
-                    <Link to="/" className="hidden h-8 w-auto lg:block">
+                    <Link to="/" className="hidden h-8 w-auto lg:block select-none">
                       All-Cracks.fr
                     </Link>
                   </div>
