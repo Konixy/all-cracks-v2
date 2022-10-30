@@ -5,6 +5,7 @@ import ContentLoader from "react-content-loader";
 import Tilt from "react-tilted";
 import axios, { AxiosResponse } from "axios";
 import { classNames } from "./Util";
+import Tooltip from "react-simple-tooltip";
 
 interface Game {
   _id: string;
@@ -78,6 +79,11 @@ export default class Games extends Component {
       width: 180,
       height: 240,
     };
+    const badgeStyle: { badge: string; icon: string } = {
+      badge:
+        "bg-gray-300 text-black py-1 px-2 rounded-lg font-bold text-[12.2px]",
+      icon: "fa-solid mr-2",
+    };
     return (
       <main>
         <div className="container flex flex-col justify-center items-center mt-16 mb-20 last:mb-0">
@@ -108,24 +114,34 @@ export default class Games extends Component {
                     <p className="text-sm text-description">{e.description}</p>
                     <div className="badges flex flex-row justify-evenly">
                       {e.release ? (
-                        <span
-                          className="badge text-bg-light text-dark gameBadge"
-                          data-bs-toggle="tooltip"
-                          data-bs-title="Date de sortie du jeu"
-                        >
-                          <i className="fa-solid fa-clock mr-2"></i>
-                          {e.release}
-                        </span>
+                        <Tooltip content="Date de sortie du jeu">
+                          <span
+                            className={badgeStyle.badge}
+                          >
+                            <i
+                              className={classNames(
+                                badgeStyle.icon,
+                                "fa-clock"
+                              )}
+                            ></i>
+                            {e.release}
+                          </span>
+                        </Tooltip>
                       ) : (
                         ""
                       )}
                       {e.lastUpdate ? (
                         <span
-                          className="badge text-bg-light text-dark gameBadge"
+                          className={badgeStyle.badge}
                           data-bs-toggle="tooltip"
                           data-bs-title="Dernière mise a jour"
                         >
-                          <i className="fa-solid fa-arrows-rotate mr-2"></i>
+                          <i
+                            className={classNames(
+                              badgeStyle.icon,
+                              "fa-arrows-rotate mr-2"
+                            )}
+                          ></i>
                           {e.lastUpdate}
                         </span>
                       ) : (
@@ -133,18 +149,23 @@ export default class Games extends Component {
                       )}
                       {e.crackDlSize ? (
                         <span
-                          className="badge text-bg-light text-dark gameBadge"
+                          className={badgeStyle.badge}
                           data-bs-toggle="tooltip"
                           data-bs-title="Taille du jeu une fois installé"
                         >
-                          <i className="fa-solid fa-folder mr-2"></i>
+                          <i
+                            className={classNames(
+                              badgeStyle.icon,
+                              "fa-folder mr-2"
+                            )}
+                          ></i>
                           {e.crackDlSize}
                         </span>
                       ) : (
                         ""
                       )}
                       <span
-                        className="badge text-bg-light text-dark gameBadge"
+                        className={badgeStyle.badge}
                         data-bs-toggle="tooltip"
                         data-bs-title={
                           e.isOnline === "true"
@@ -154,7 +175,7 @@ export default class Games extends Component {
                       >
                         <i
                           className={classNames(
-                            "fa-solid mr-2",
+                            badgeStyle.icon,
                             e.isOnline === "true" ? "fa-user-group" : "fa-user"
                           )}
                         ></i>
