@@ -3,6 +3,9 @@ import config from "./config";
 import { PrimaryButton, SecondaryButton } from "./Util.tsx";
 
 export default class Home extends Component {
+  componentDidMount() {
+    document.title = "All-Cracks.fr"
+  }
   render() {
     return (
       <div className="container items-center text-center my-20 w-full">

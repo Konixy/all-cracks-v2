@@ -23,8 +23,10 @@ export default function Game() {
     (async () => {
       setGame({ loading: true });
       const r = await fetchGame(gameId);
-      if (r) setGame(r);
-      else setGame(null);
+      if (r) {
+        document.title = `${r.name} | All-Cracks.fr`
+        setGame(r)
+      } else setGame(null);
     })();
   }, [gameId]);
 

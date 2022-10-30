@@ -5,6 +5,7 @@ import {
   SearchBox,
   Hits,
   Configure,
+  useHits
 } from "react-instantsearch-hooks-web";
 import { Link, useSearchParams, redirect } from "react-router-dom";
 import config from "./config";
@@ -35,14 +36,14 @@ interface Hit {
 export default function Search() {
   const [state, setState] = useState<boolean>(false);
   const [params, setParams] = useSearchParams();
-  function submitSearch(event: SubmitElement) {
-    const value = event.target?.value
+  // function submitSearch(event: SubmitElement) {
+  //   const value = event.target?.value
 
-    if(value) {
-      if(value.length <= 0) return closeSearch();
-    }
-    redirect("")
-  }
+  //   if(value) {
+  //     if(value.length <= 0) return closeSearch();
+  //   }
+  //   redirect(`/games/${hits.hits[0]._id}`)
+  // }
   function searchInput(event: inputEvent) {
     const value = event.target?.value;
 
@@ -64,7 +65,7 @@ export default function Search() {
         className="search-input"
         inputMode="search"
         onInput={searchInput}
-        onSubmit={submitSearch}
+        // onSubmit={submitSearch}
         defaultValue={params.get("search") || ""}
         submitIconComponent={() => (
           <i className="fa-solid fa-magnifying-glass submit-icon text-gray-500"></i>

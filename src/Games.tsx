@@ -6,7 +6,7 @@ import ContentLoader from "react-content-loader";
 import Tilt from "react-tilted";
 import axios, { AxiosResponse } from "axios";
 import { classNames } from "./Util";
-import Tooltip from "react-simple-tooltip";
+import ReactTooltip from "react-tooltip";
 
 interface Game {
   _id: string;
@@ -38,6 +38,9 @@ interface APIResponse {
 }
 
 function Games({ currentGames }: { currentGames: Game[] | null }) {
+  useEffect(() => {
+    document.title = "Jeux | All-Cracks.fr";
+  }, []);
   const loaderParams = {
     width: 180,
     height: 240,
@@ -75,23 +78,33 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                 </Link>
                 <p className="text-sm text-description">{e.description}</p>
                 <div className="badges flex flex-row justify-evenly">
+                  <ReactTooltip
+                    id="globalTip"
+                    place="top"
+                    effect="solid"
+                    backgroundColor="#111827"
+                  />
                   {e.release ? (
-                    <Tooltip content="Date de sortie du jeu">
-                      <span className={badgeStyle.badge}>
+                    <>
+                      <span
+                        className={badgeStyle.badge}
+                        data-tip="Date de sortie du jeu"
+                        data-for="globalTip"
+                      >
                         <i
                           className={classNames(badgeStyle.icon, "fa-clock")}
                         ></i>
                         {e.release}
                       </span>
-                    </Tooltip>
+                    </>
                   ) : (
                     ""
                   )}
                   {e.lastUpdate ? (
                     <span
                       className={badgeStyle.badge}
-                      data-bs-toggle="tooltip"
-                      data-bs-title="Dernière mise a jour"
+                      data-for="globalTip"
+                      data-tip="Dernière mise a jour"
                     >
                       <i
                         className={classNames(
@@ -107,8 +120,8 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                   {e.crackDlSize ? (
                     <span
                       className={badgeStyle.badge}
-                      data-bs-toggle="tooltip"
-                      data-bs-title="Taille du jeu une fois installé"
+                      data-for="globalTip"
+                      data-tip="Taille du jeu une fois installé"
                     >
                       <i
                         className={classNames(
@@ -123,8 +136,8 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                   )}
                   <span
                     className={badgeStyle.badge}
-                    data-bs-toggle="tooltip"
-                    data-bs-title={
+                    data-for="globalTip"
+                    data-tip={
                       e.isOnline === "true"
                         ? "Le jeu est disponible en multijoueur"
                         : "Le jeu n'est accessible qu'en solo"
@@ -186,7 +199,6 @@ export default function GamesList() {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(games ? games.slice(itemOffset, endOffset) : null);
     setPageCount(Math.ceil((games ? games.length : 10) / itemsPerPage));
   }, [games, itemOffset, itemsPerPage]);
@@ -203,9 +215,6 @@ export default function GamesList() {
   const handlePageClick = (event: { selected: number }) => {
     const newOffset =
       (event.selected * itemsPerPage) % (games ? games.length : 10);
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
 
