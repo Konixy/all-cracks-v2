@@ -5,10 +5,18 @@ import "./styles/index.scss";
 import Home from "./Home";
 import Header from "./Header";
 import Footer from "./Footer";
-import Games from "./Games.tsx";
-import Game, { OnGameLoad } from "./Game";
+import Games from "./Games";
+import Game from "./Game";
+import NotFound from "./NotFound";
 
-const routes = [
+interface RouteElement {
+  path: string;
+  element: () => JSX.Element;
+  noHeader?: boolean;
+  noFooter?: boolean;
+}
+
+const routes: RouteElement[] = [
   { path: "/", element: Home },
   {
     path: "/games",
@@ -16,9 +24,12 @@ const routes = [
   },
   {
     path: "/game/:gameId",
-    element: Game,
-    onLoad: OnGameLoad,
+    element: Game
   },
+  {
+    path: "*",
+    element: NotFound
+  }
 ];
 
 class App extends React.Component {
@@ -28,10 +39,8 @@ class App extends React.Component {
         <Routes>
           {routes.map((route) => (
             <Route
-              key={route}
-              exact
+              key={route.path}
               path={route.path}
-              loader={route.onLoad ? route.onLoad : undefined}
               element={
                 <>
                   {route.noHeader ? <></> : <Header path={route.path} />}
@@ -41,21 +50,11 @@ class App extends React.Component {
               }
             />
           ))}
-          <Route
-            path="*"
-            element={
-              <>
-                <Header />
-                404
-                <Footer />
-              </>
-            }
-          />
         </Routes>
       </Router>
     );
   }
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(<App />);

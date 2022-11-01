@@ -4,12 +4,6 @@ import config from "./config";
 import axios from "axios";
 // import Md from 'react-markdown'
 
-export function OnGameLoad() {
-  setTimeout(() => {
-    return <>Loading</>;
-  }, 5000);
-}
-
 async function fetchGame(gameId) {
   const r = await axios.get(`${config.backendPath}/api/games/${gameId}`);
   return r.data.game;
