@@ -10,9 +10,9 @@ async function fetchGame(gameId) {
 }
 
 function showTutorial() {
-  document.querySelector(".game-tuto").classList.toggle('hidden')
-  document.querySelector(".tutorial-icon").classList.toggle('fa-chevron-down')
-  document.querySelector(".tutorial-icon").classList.toggle('fa-chevron-up')
+  document.querySelector(".game-tuto").classList.toggle("hidden");
+  document.querySelector(".tutorial-icon").classList.toggle("fa-chevron-down");
+  document.querySelector(".tutorial-icon").classList.toggle("fa-chevron-up");
 }
 
 export default function Game() {
@@ -24,8 +24,8 @@ export default function Game() {
       setGame({ loading: true });
       const r = await fetchGame(gameId);
       if (r) {
-        document.title = `${r.name} | All-Cracks.fr`
-        setGame(r)
+        document.title = `${r.name} | All-Cracks.fr`;
+        setGame(r);
       } else setGame(null);
     })();
   }, [gameId]);
@@ -37,16 +37,29 @@ export default function Game() {
     return <div className="text-center text-lg my-20">Chargement...</div>;
   return (
     <div className="container">
-      <img src={game.bgUrl.replace("screenshot_med", "screenshot_huge")} alt={game.name} className="bg-fixed absolute -z-10 top-0 w-full" />
+      <div className="-z-10 absolute left-0 h-full w-full -mt-[120px] overflow-hidden">
+        <div className={`w-full h-full bg-cover blur scale-110 after:absolute after:left-0 after:top-0 after:w-full after:h-full game-bg`} style={{backgroundImage: `url(${game.bgUrl.replace("screenshot_med", "screenshot_huge")})`, backgroundPosition: "center center"}}></div>
+      </div>
       <main className="my-20 text-center">
         <div className="text-lg mb-10">{game.name}</div>
         <div className="text-sm mx-40">{game.description}</div>
         {game.tutorial ? (
-        <button onClick={showTutorial} className="mx-40 px-8 py-6 rounded-lg bg-[#0d1117]">
-          <div className="text-lg">Tutoriel d'installation <i className="fa-solid fa-chevron-down tutorial-icon ml-2"></i></div>
-          <Md className="hidden mt-5 text-md game-tuto text-left" source={game.tutorial} />
-        </button>
-        ) : ""}
+          <button
+            onClick={showTutorial}
+            className="mx-40 px-8 py-6 rounded-lg bg-[#0d1117]"
+          >
+            <div className="text-lg">
+              Tutoriel d'installation{" "}
+              <i className="fa-solid fa-chevron-down tutorial-icon ml-2"></i>
+            </div>
+            <Md
+              className="hidden mt-5 text-md game-tuto text-left"
+              source={game.tutorial}
+            />
+          </button>
+        ) : (
+          ""
+        )}
       </main>
     </div>
   );

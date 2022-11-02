@@ -67,7 +67,7 @@ export default class Header extends Component {
   }
   render() {
     return (
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -137,7 +137,7 @@ export default class Header extends Component {
                                   this.props.path === item.href
                                     ? "text-white"
                                     : "text-gray-400 hover:text-white focus:text-white",
-                                  "px-3 py-2 rounded-md text-base font-medium transition-all flex items-center justify-center bg-gray-800 outline-none",
+                                  "px-3 py-2 rounded-md text-base font-medium transition-all flex items-center justify-center outline-none",
                                 ].join(" ")}
                               >
                                 <span className="sr-only">
