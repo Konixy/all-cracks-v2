@@ -40,9 +40,18 @@ export default function Game() {
       <div className="-z-10 absolute left-0 h-full w-full -mt-[120px] overflow-hidden">
         <div className={`w-full h-full bg-cover blur scale-110 after:absolute after:left-0 after:top-0 after:w-full after:h-full game-bg`} style={{backgroundImage: `url(${game.bgUrl.replace("screenshot_med", "screenshot_huge")})`, backgroundPosition: "center center"}}></div>
       </div>
-      <main className="my-20 text-center">
-        <div className="text-lg mb-10">{game.name}</div>
-        <div className="text-sm mx-40">{game.description}</div>
+      <main className="my-10 text-center">
+      <div className="text-3xl mb-10">{game.name}</div>
+        <div className="flex flex-row justify-evenly">
+          <img src={game.coverUrl} alt={game.name} className="rounded-lg" />
+          <iframe
+              width="664" height="374" src={`https://www.youtube.com/embed/${game.videoId}?controls=0&rel=0&amp;autoplay=1&mute=1`}
+              title="YouTube video player" frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+              className="rounded-lg lg:block md:hidden">
+          </iframe>
+        </div>
+        <div className="text-lg mx-20 my-20">{game.description}</div>
         {game.tutorial ? (
           <button
             onClick={showTutorial}
