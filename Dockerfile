@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt-get -y update
+RUN apk -y update
 
-RUN apt-get -y install git
+RUN apk -y install git
 
 RUN git pull
 
