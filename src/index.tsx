@@ -8,27 +8,36 @@ import Footer from "./Footer";
 import Games from "./Games";
 import Game from "./Game";
 import NotFound from "./NotFound";
+import DMCA from "./DMCA";
 
 interface RouteElement {
   path: string;
   element: () => JSX.Element;
+  name?: string;
   noHeader?: boolean;
   noFooter?: boolean;
 }
 
 const routes: RouteElement[] = [
-  { path: "/", element: Home },
+  { path: "/", element: Home, name: "Accueil" },
   {
     path: "/games",
     element: Games,
+    name: "Jeux"
   },
   {
     path: "/game/:gameId",
-    element: Game
+    element: Game,
+  },
+  {
+    path: "/dmca",
+    element: DMCA,
+    name: "DMCA"
   },
   {
     path: "*",
-    element: NotFound
+    element: NotFound,
+    name: "404"
   }
 ];
 
@@ -43,6 +52,10 @@ class App extends React.Component {
               path={route.path}
               element={
                 <>
+                  {() => {
+                    if(route.name) document.title = `${route.name} | All-Cracks.fr`
+                    return <></>
+                  }}
                   {route.noHeader ? <></> : <Header path={route.path} />}
                   <route.element />
                   {route.noFooter ? <></> : <Footer />}

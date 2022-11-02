@@ -146,3 +146,27 @@ input[type="search"]::-webkit-search-cancel-button {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.markdown h1 {
+  border-bottom: solid 1px rgba($color: #fff, $alpha: .15);
+  margin-bottom: 15px;
+  font-size: 30pt;
+}
+
+.markdown h2 {
+  border-bottom: solid 1px rgba($color: #fff, $alpha: .15);
+  margin-bottom: 15px;
+  font-size: 24pt;
+}
+
+.markdown h3 {
+  font-size: 22pt;
+}
+
+.markdown h4 {
+  font-size: 20pt;
+}
+
+.markdown p {
+  font-size: 12pt;
+}

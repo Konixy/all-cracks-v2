@@ -4,25 +4,16 @@ import {
   InstantSearch,
   SearchBox,
   Hits,
-  Configure,
-  useHits
+  Configure
 } from "react-instantsearch-hooks-web";
-import { Link, useSearchParams, redirect } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import config from "./config";
 import { Oval } from "react-loader-spinner";
 
 const searchClient = algoliasearch(config.searchId, config.searchKey);
 
-interface SubmitElement extends FormEvent<HTMLFormElement> {
-  target: eventTarget;
-}
-
 interface inputEvent extends FormEvent<HTMLInputElement> {
   target: HTMLInputElement;
-}
-
-interface eventTarget extends EventTarget {
-  value?: string;
 }
 
 interface Hit {

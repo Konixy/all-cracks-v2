@@ -177,6 +177,24 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                   height={loaderParams.height}
                 />
               </ContentLoader>
+              <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
+                <ContentLoader
+                  speed={2}
+                  width={300}
+                  height={25}
+                  viewBox="0 0 300 25"
+                  backgroundColor="#37415122"
+                  foregroundColor="#37415144"
+                  className="rounded-md"
+                >
+                  <rect
+                    x="0"
+                    y="0"
+                    width={300}
+                    height={25}
+                  />
+                </ContentLoader>
+              </div>
             </div>
           ))}
     </>
