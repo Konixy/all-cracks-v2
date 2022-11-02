@@ -16,4 +16,4 @@ ENV NODE_ENV production
 
 EXPOSE 80
 
-CMD [ "npx", "serve", "build", "" ]
+CMD [ "npx", "serve", "build", "-l", "80" ]
