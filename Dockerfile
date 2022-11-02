@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN sudo apt update; sudo apt full-upgrade; sudo apt install git
+RUN apt update; apt full-upgrade; apt install git
 
 RUN git config pull.rebase false
 

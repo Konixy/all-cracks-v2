@@ -72,7 +72,7 @@ export default function Game() {
       <div className="container">
         <div className="-z-10 absolute left-0 h-full w-full -mt-[120px] overflow-hidden">
           <div
-            className={`w-full h-full bg-cover blur scale-110 after:absolute after:left-0 after:top-0 after:w-full after:h-full game-bg`}
+            className={`w-full h-full bg-cover blur after:absolute after:left-0 after:top-0 after:w-full after:h-full game-bg`}
             style={{
               backgroundImage: `url(${game.bgUrl?.replace(
                 "screenshot_med",
@@ -88,7 +88,7 @@ export default function Game() {
             <img
               src={game.coverUrl?.replace("cover_big", "720p")}
               alt={game.name}
-              className="rounded-lg"
+              className="rounded-xl"
               width={264}
               height={374}
             />
@@ -98,14 +98,13 @@ export default function Game() {
               src={`https://www.youtube.com/embed/${game.videoId}?controls=0&rel=0&amp;autoplay=1&mute=1`}
               title={game.name}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-              className="rounded-lg lg:block md:hidden"
+              className="rounded-xl lg:block md:hidden"
             ></iframe>
           </div>
-          <div className="text-lg mx-20 my-20">{game.description}</div>
           {game.tutorial ? (
             <button
               onClick={showTutorial}
-              className="mx-40 px-8 py-6 rounded-lg bg-[#0d1117]"
+              className="mx-40 mt-20 px-8 py-6 rounded-lg bg-[#0d1117]"
             >
               <div className="text-lg">
                 Tutoriel d'installation{" "}
@@ -162,6 +161,15 @@ export default function Game() {
                 </div>
               ))}
             </>
+          </div>
+          <div>
+            <div className="text-2xl">A propos de {game.name} :</div>
+            <div className="text-lg mx-20 my-10">{game.description}</div>
+            <div className="text-left mx-20">
+              Derniere mise a jour : {game.lastUpdate}<br/>
+              Date de sortie du jeux : {game.release}<br/>
+              Taille du jeux une fois installé : {game.crackDlSize}
+            </div>
           </div>
         </main>
       </div>
