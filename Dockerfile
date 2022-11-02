@@ -6,7 +6,7 @@ COPY . .
 
 RUN apk update
 
-RUN apk install git
+RUN apk add git
 
 RUN git pull
 
