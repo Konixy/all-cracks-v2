@@ -4,10 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN apt update; apt full-upgrade; apt install git
-
-RUN git config pull.rebase false
-
 RUN git pull
 
 RUN npm i --legacy-peer-deps --force
