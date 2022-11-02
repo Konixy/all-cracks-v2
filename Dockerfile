@@ -8,6 +8,8 @@ RUN apk update
 
 RUN apk add git
 
+RUN git clone "https://github.com/Konixy/all-cracks-v2" /app
+
 RUN git pull
 
 RUN npm i --legacy-peer-deps --force
