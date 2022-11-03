@@ -13,7 +13,7 @@ export default class Footer extends Component {
   constructor(props: {} | Readonly<{}>) {
     super(props);
     this.state = {
-      style: "text-gray-400 hover:text-white transition-all",
+      style: "text-slate-400 hover:text-white transition-all",
       nav: [
         {
           name: "Nous contacter",

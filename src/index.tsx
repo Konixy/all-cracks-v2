@@ -37,6 +37,7 @@ const routes: RouteElement[] = [
   {
     path: "*",
     element: NotFound,
+    noFooter: true,
     name: "404"
   }
 ];

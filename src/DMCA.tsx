@@ -6,6 +6,7 @@ const DMCAPath = require('./DMCA.md');
 export default function DMCA() {
   const [content, setContent] = useState<string>("Chargement...")
   useEffect(() => {
+    document.title = "DMCA | All-Cracks.fr"
     async function fetchContent() {
       await fetch(DMCAPath).then((r) => r.text()).then((text) => {
         setContent(text.replace(/\${owner}/gm, config.ownerName).replace(/\${discord}/gm, config.discordInvite))

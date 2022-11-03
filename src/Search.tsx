@@ -1,10 +1,11 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import algoliasearch from "algoliasearch/lite";
 import {
   InstantSearch,
   SearchBox,
   Hits,
-  Configure
+  Configure,
+  Highlight
 } from "react-instantsearch-hooks-web";
 import { Link, useSearchParams } from "react-router-dom";
 import config from "./config";
@@ -21,12 +22,30 @@ interface Hit {
     name: string;
     coverUrl: string;
     _id: string;
+    __position: number;
+    __queryID?: string;
+    objectID: string;
   };
 }
 
 export default function Search() {
   const [state, setState] = useState<boolean>(false);
   const [params, setParams] = useSearchParams();
+  useEffect(() => {
+    const searchInput: HTMLInputElement | null = document.querySelector(".search-input");
+    searchInput?.addEventListener('focusout', (event: FocusEvent) => {
+      const target: (HTMLInputElement & EventTarget) | null = event.target as (HTMLInputElement & EventTarget);
+      if(target?.value.length <= 0) return closeSearch();
+      closeSearch()
+    })
+    searchInput?.addEventListener('focusin', (event: FocusEvent) => {
+      const target: (HTMLInputElement & EventTarget) | null = event.target as (HTMLInputElement & EventTarget);
+      if(target?.value.length <= 0) return closeSearch();
+      else openSearch(target?.value);
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
   // function submitSearch(event: SubmitElement) {
   //   const value = event.target?.value
 
@@ -59,12 +78,10 @@ export default function Search() {
         // onSubmit={submitSearch}
         defaultValue={params.get("search") || ""}
         submitIconComponent={() => (
-          <i className="fa-solid fa-magnifying-glass submit-icon text-gray-500"></i>
+          <i className="z-20 fa-solid fa-magnifying-glass submit-icon text-gray-500"></i>
         )}
         resetIconComponent={() => (
-          <button onClick={closeSearch} className="z-10 cursor-pointer">
-            <i className="fa-solid fa-xmark search-reset text-gray-500"></i>
-          </button>
+          <i className="z-20 fa-solid fa-xmark search-reset text-gray-500"></i>
         )}
         loadingIconComponent={() => (
           <Oval
@@ -81,9 +98,9 @@ export default function Search() {
           <Hits
             hitComponent={({ hit }: Hit) => {
               return (
-                <Link to={`/game/${hit._id}`} className="mt-10 cursor-pointer flex flex-row" onClick={closeSearch}>
-                  <img src={hit.coverUrl.replace("cover_big", "cover_small")} alt={hit.name} />
-                  <h1>{hit.name}</h1>
+                <Link to={`/game/${hit._id}`} className="z-50 mt-10 cursor-pointer flex flex-row" onClick={closeSearch}>
+                  <img src={hit.coverUrl} alt={hit.name} width="90" height="128" />
+                  <Highlight attribute="name" hit={hit}></Highlight>
                 </Link>
               );
             }}

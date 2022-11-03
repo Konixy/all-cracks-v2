@@ -10,6 +10,10 @@ $bgColor: #1f2937;
   src: url("/GoodTiming.ttf") format("opentype");
 }
 
+.bg-slate-900 {
+  background-color: rgb(15 23 42);
+}
+
 /* Customize website's scrollbar like Mac OS
 Not supports in Firefox and IE */
 
@@ -81,33 +85,29 @@ body {
   padding-left: 2rem;
   width: 100%;
   border-radius: 0.5rem;
-  border-width: 1px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  border: none;
+  background-color: #1e293b;
   --tw-border-opacity: 1;
-  border-color: rgb(75 85 99 / var(--tw-border-opacity));
   color: white;
   outline: 2px solid transparent;
   outline-offset: 2px;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+  box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
 }
 .search-input input::placeholder {
-  --tw-placeholder-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-placeholder-opacity));
+  color: #9ca3af;
 }
 
 .search-input input:focus {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
     var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
-    calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
     var(--tw-shadow, 0 0 #0000);
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
-  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+  --tw-ring-color: #38bdf8;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -125,8 +125,7 @@ input[type="search"]::-webkit-search-cancel-button {
   pointer-events: none;
 }
 
-.search-input .ais-SearchBox-reset,
-.search-input .search-loader {
+.search-input .ais-SearchBox-reset, .search-input .ais-SearchBox-loader {
   position: absolute;
   right: 0px;
   top: 0px;
@@ -134,10 +133,9 @@ input[type="search"]::-webkit-search-cancel-button {
   align-items: center;
   padding-right: 1.25rem;
   fill: black;
-  pointer-events: none;
   font-size: 1rem;
   cursor: pointer;
-  z-index: 1000;
+  user-select: none;
 }
 
 .text-description {
@@ -148,5 +146,5 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .game-bg::after {
-  background-image: linear-gradient(rgb(31, 41, 55, 1) 0%, rgb(31, 41, 55, 1) 7%, rgba(0,0,0,0) 50%, rgb(31, 41, 55, 1) 93%, rgb(31, 41, 55, 1) 100%);
+  background-image: linear-gradient(rgb(15, 23, 42, 1) 0%, rgb(15, 23, 42, 1) 7%, rgba(0,0,0,0) 50%, rgb(15, 23, 42, 1) 93%, rgb(15, 23, 42, 1) 100%);
 }

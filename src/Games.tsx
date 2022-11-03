@@ -225,7 +225,7 @@ export default function GamesList() {
     axios
       .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {
-        setGames(r.data.games);
+        setGames(r.data.games.sort((a,b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()));
       });
   }
 
