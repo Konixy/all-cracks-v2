@@ -7,37 +7,9 @@ import Tilt from "react-tilted";
 import axios, { AxiosResponse } from "axios";
 import { classNames } from "./Util";
 import ReactTooltip from "react-tooltip";
+import { APIGame, APIResponse } from "./Types";
 
-interface Game {
-  _id: string;
-  name: string;
-  release: string;
-  releaseDate: string;
-  lastUpdate: string;
-  lastUpdateDate: string;
-  description?: string;
-  tutorial?: string;
-  bgUrl?: string;
-  coverUrl?: string;
-  videoId?: string;
-  crackDlLink?: string;
-  crackDlSize?: string;
-  crackDlLinkType?: string;
-  isOnline?: string;
-  additionalLinks: AdditionnalLink[];
-}
-
-interface AdditionnalLink {
-  name: string;
-  link: string;
-  linkType?: "rar" | "torrent";
-}
-
-interface APIResponse {
-  games: Game[];
-}
-
-function Games({ currentGames }: { currentGames: Game[] | null }) {
+function Games({ currentGames }: { currentGames: APIGame[] | null }) {
   useEffect(() => {
     document.title = "Jeux | All-Cracks.fr";
   }, []);
@@ -77,7 +49,7 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                   {e.name}
                 </Link>
                 <p className="text-sm text-description">{e.description}</p>
-                <div className="badges flex flex-row justify-evenly">
+                <div className="badges flex flex-row justify-between">
                   <ReactTooltip
                     id="globalTip"
                     place="top"
@@ -181,18 +153,15 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                 <ContentLoader
                   speed={2}
                   width={300}
-                  height={25}
-                  viewBox="0 0 300 25"
+                  height={85}
+                  viewBox="0 0 300 85"
                   backgroundColor="#37415122"
                   foregroundColor="#37415144"
-                  className="rounded-md"
+                  className="inline-rounded-md"
                 >
-                  <rect
-                    x="0"
-                    y="0"
-                    width={300}
-                    height={25}
-                  />
+                  <rect x="0" y="0" width={300} height={25} />
+                  <rect x="0" y="35" width={600} height={25} />
+                  <rect x="0" y="70" width={520} height={25} />
                 </ContentLoader>
               </div>
             </div>
@@ -203,8 +172,8 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
 
 export default function GamesList() {
   // We start with an empty list of items.
-  const [games, setGames] = useState<Game[] | null>(null);
-  const [currentItems, setCurrentItems] = useState<Game[] | null>(null);
+  const [games, setGames] = useState<APIGame[] | null>(null);
+  const [currentItems, setCurrentItems] = useState<APIGame[] | null>(null);
   const [pageCount, setPageCount] = useState<number>(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
@@ -225,7 +194,13 @@ export default function GamesList() {
     axios
       .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {
-        setGames(r.data.games.sort((a,b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()));
+        setGames(
+          r.data.games.sort(
+            (a, b) =>
+              new Date(b.releaseDate).getTime() -
+              new Date(a.releaseDate).getTime()
+          )
+        );
       });
   }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import config from "./config";
-import { PrimaryButton, SecondaryButton } from "./Util.tsx";
+import { PrimaryButton, SecondaryButton } from "./Util";
 
 export default function Home() {
   useEffect(() => {

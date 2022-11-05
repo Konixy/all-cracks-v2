@@ -288,10 +288,18 @@ export default class Header extends Component {
                                         ) : (
                                           <div
                                             key={e.type}
-                                            className="px-3 my-2 text-center"
+                                            className="px-3 my-2 text-center flex flex-col"
                                           >
-                                            <i className="fa-solid fa-warning text-lg text-orange-400"></i>{" "}
-                                            Connexion impossible
+                                            <div>
+                                              <i className="fa-solid fa-warning text-lg text-orange-400"></i>{" "}
+                                              Erreur
+                                            </div>
+                                            <button
+                                              className="bg-slate-300 text-black py-1 px-2 rounded-md mt-1"
+                                              onClick={this.fetchGames}
+                                            >
+                                              Ressayer
+                                            </button>
                                           </div>
                                         )
                                       }
@@ -305,7 +313,7 @@ export default class Header extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:flex sm:relative">
+                  <div className="hidden justify-center inset-y-0 sm:right-0 sm:top-0 items-center pr-2 sm:flex sm:relative">
                     <Search />
 
                     {/* Profile dropdown */}
@@ -377,14 +385,15 @@ export default class Header extends Component {
               </div>
 
               <Disclosure.Panel className="sm:hidden">
-                <div className="space-y-1 px-2 pt-2 pb-3">
+                <div className="space-y-1 px-2 pt-2 pb-3 text-center">
+                  <div className="mb-3 inset-y-0"><Search /></div>
                   {this.state.nav.map((item) => (
                     <Disclosure.Button
                       key={item.name}
-                      as={item.external ? "a" : Link}
+                      as={item.type === 'href' ? "a" : Link}
                       href={item.href}
                       to={item.href}
-                      target={item.external ? "_blank" : undefined}
+                      target={item.type === "href" ? "_blank" : undefined}
                       className={[
                         this.props.path === item.href
                           ? "text-white"

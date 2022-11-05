@@ -5,32 +5,7 @@ import axios from "axios";
 import Md from "@uiw/react-markdown-preview";
 import { PrimaryButton, SecondaryButton } from "./Util";
 import ReactTooltip from "react-tooltip";
-
-interface APIGame {
-  _id: string;
-  name: string;
-  release: string;
-  releaseDate: string;
-  lastUpdate: string;
-  lastUpdateDate: string;
-  description?: string;
-  tutorial?: string;
-  bgUrl?: string;
-  coverUrl?: string;
-  videoId?: string;
-  crackDlLink?: string;
-  crackDlSize?: string;
-  crackDlLinkType?: string;
-  isOnline?: string;
-  additionalLinks?: AdditionnalLink[];
-}
-
-interface AdditionnalLink {
-  _id: string;
-  name: string;
-  link: string;
-  linkType: "rar" | "torrent";
-}
+import { APIGame } from "./Types";
 
 async function fetchGame(gameId: string): Promise<APIGame> {
   const r = await axios.get(`${config.backendPath}/api/games/${gameId}`);
