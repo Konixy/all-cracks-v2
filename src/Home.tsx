@@ -26,7 +26,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full mt-40">
-        <h1 className="text-2xl">La sécurité avant tout <i className="fa-solid fa-locker"></i></h1>
+        <h1 className="text-2xl"><i className="fa-solid fa-shield-keyhole"></i> La sécurité avant tout</h1>
         <div className="text-lg text-slate-300 mt-10">Tout nos jeux sont tésté et approuvé par notre équipe.<br/><span className="text-white text-3xl">0%</span> de chance d'avoir un virus</div>
       </div>
     </div>

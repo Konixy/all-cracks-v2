@@ -155,19 +155,19 @@ function Games({
                 height={loaderParams.height}
               />
             </ContentLoader>
-            <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
+            <div className="px-10 py-6 whitespace-normal w-[670px]">
               <ContentLoader
                 speed={2}
                 width={600}
-                height={100}
-                viewBox="0 0 600 100"
+                height={240}
+                viewBox="0 0 600 240"
                 backgroundColor="#37415122"
                 foregroundColor="#37415144"
-                className="inline-rounded-md"
               >
-                <rect x={0} y={0} r={6} width={300} height={25} />
-                <rect x={0} y={50} r={6} width={600} height={20} />
-                <rect x={0} y={85} r={6} width={520} height={20} />
+                <rect x={0} y={0} rx={6} ry={6} width={300} height={25} />
+                <rect x={0} y={70} rx={6} ry={6} width={600} height={15} />
+                <rect x={0} y={100} rx={6} ry={6} width={420} height={15} />
+                <rect x={0} y={130} rx={6} ry={6} width={520} height={15} />
               </ContentLoader>
             </div>
           </div>
@@ -190,6 +190,7 @@ export default function GamesList() {
   const itemsPerPage = 10;
 
   useEffect(() => {
+    setState({loading: true, success: false})
     loadGames();
   }, []);
 

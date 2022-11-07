@@ -46,7 +46,7 @@ export default function Game() {
       fetchGame();
     })();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [gameId]);
 
   game?.additionalLinks?.forEach((e) => console.log(e));
   if (state.loading)
@@ -82,13 +82,13 @@ export default function Game() {
               src={`https://www.youtube.com/embed/${game.videoId}?controls=0&rel=0&amp;autoplay=1&mute=1`}
               title={game.name}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-              className="rounded-xl lg:block md:hidden"
+              className="rounded-xl hidden lg:block"
             ></iframe>
           </div>
           {game.tutorial ? (
             <button
               onClick={showTutorial}
-              className="mx-40 mt-20 px-8 py-6 rounded-lg bg-[#0d1117]"
+              className="mx-5 sm:mx-10 md:mx-20 lg:mx-40 mt-20 px-8 py-6 rounded-lg bg-[#0d1117]"
             >
               <div className="text-lg">
                 Tutoriel d'installation{" "}
