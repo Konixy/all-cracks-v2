@@ -17,5 +17,5 @@ export default function DMCA() {
 
   console.log(content)
 
-  return <Md className="mx-20 my-10 px-8 py-6 rounded-lg" source={content} />;
+  return <Md className="mx-4 sm:mx-10 md:mx-20 my-10 px-8 py-6 rounded-lg" source={content} />;
 }

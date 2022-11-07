@@ -5,11 +5,19 @@ import config from "./config";
 import ContentLoader from "react-content-loader";
 import Tilt from "react-tilted";
 import axios, { AxiosResponse } from "axios";
-import { classNames } from "./Util";
+import { classNames, NoConnection } from "./Util";
 import ReactTooltip from "react-tooltip";
 import { APIGame, APIResponse } from "./Types";
 
-function Games({ currentGames }: { currentGames: APIGame[] | null }) {
+function Games({
+  currentGames,
+  state,
+  retry,
+}: {
+  currentGames: APIGame[] | null;
+  state: { success: boolean; loading: boolean };
+  retry: () => void;
+}) {
   useEffect(() => {
     document.title = "Jeux | All-Cracks.fr";
   }, []);
@@ -24,154 +32,155 @@ function Games({ currentGames }: { currentGames: APIGame[] | null }) {
   };
   return (
     <>
-      {currentGames
-        ? currentGames.map((e) => (
-            <div
-              className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
-              key={e.name}
-            >
-              <div className="block w-[180px]">
-                <Link to={`/game/${e._id}`} className="w-[180px]">
-                  <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
-                    <img
-                      src={e.coverUrl}
-                      alt={e.name}
-                      width="180px"
-                      height="240px"
-                      className="relative rounded-lg game-card-img tilt w-[180px] h-[240px]"
-                      data-tilt
-                    />
-                  </Tilt>
-                </Link>
-              </div>
-              <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
-                <Link to={`/game/${e._id}`} className="text-lg">
-                  {e.name}
-                </Link>
-                <p className="text-sm text-description">{e.description}</p>
-                <div className="badges flex flex-row justify-between">
-                  <ReactTooltip
-                    id="globalTip"
-                    place="top"
-                    effect="solid"
-                    backgroundColor="#111827"
+      {state.success && currentGames ? (
+        currentGames.map((e) => (
+          <div
+            className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
+            key={e.name}
+          >
+            <div className="block w-[180px]">
+              <Link to={`/game/${e._id}`} className="w-[180px]">
+                <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
+                  <img
+                    src={e.coverUrl}
+                    alt={e.name}
+                    width="180px"
+                    height="240px"
+                    className="relative rounded-lg game-card-img tilt w-[180px] h-[240px]"
+                    data-tilt
                   />
-                  {e.release ? (
-                    <>
-                      <span
-                        className={badgeStyle.badge}
-                        data-tip="Date de sortie du jeu"
-                        data-for="globalTip"
-                      >
-                        <i
-                          className={classNames(badgeStyle.icon, "fa-clock")}
-                        ></i>
-                        {e.release}
-                      </span>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                  {e.lastUpdate ? (
+                </Tilt>
+              </Link>
+            </div>
+            <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
+              <Link to={`/game/${e._id}`} className="text-lg">
+                {e.name}
+              </Link>
+              <p className="text-sm text-description">{e.description}</p>
+              <div className="badges flex flex-row justify-between">
+                <ReactTooltip
+                  id="globalTip"
+                  place="top"
+                  effect="solid"
+                  backgroundColor="#111827"
+                />
+                {e.release ? (
+                  <>
                     <span
                       className={badgeStyle.badge}
+                      data-tip="Date de sortie du jeu"
                       data-for="globalTip"
-                      data-tip="Dernière mise a jour"
                     >
                       <i
-                        className={classNames(
-                          badgeStyle.icon,
-                          "fa-arrows-rotate mr-2"
-                        )}
+                        className={classNames(badgeStyle.icon, "fa-clock")}
                       ></i>
-                      {e.lastUpdate}
+                      {e.release}
                     </span>
-                  ) : (
-                    ""
-                  )}
-                  {e.crackDlSize ? (
-                    <span
-                      className={badgeStyle.badge}
-                      data-for="globalTip"
-                      data-tip="Taille du jeu une fois installé"
-                    >
-                      <i
-                        className={classNames(
-                          badgeStyle.icon,
-                          "fa-folder mr-2"
-                        )}
-                      ></i>
-                      {e.crackDlSize}
-                    </span>
-                  ) : (
-                    ""
-                  )}
+                  </>
+                ) : (
+                  ""
+                )}
+                {e.lastUpdate ? (
                   <span
                     className={badgeStyle.badge}
                     data-for="globalTip"
-                    data-tip={
-                      e.isOnline === "true"
-                        ? "Le jeu est disponible en multijoueur"
-                        : "Le jeu n'est accessible qu'en solo"
-                    }
+                    data-tip="Dernière mise a jour"
                   >
                     <i
                       className={classNames(
                         badgeStyle.icon,
-                        e.isOnline === "true" ? "fa-user-group" : "fa-user"
+                        "fa-arrows-rotate mr-2"
                       )}
                     ></i>
-                    {e.isOnline === "true" ? "Multijoueur" : "Solo"}
+                    {e.lastUpdate}
                   </span>
-                  {/* user ? <a href="/admin/edit/${e._id" className="editGame text-light"><i className="fa-solid fa-gear"></i></a> : "" */}
-                </div>
+                ) : (
+                  ""
+                )}
+                {e.crackDlSize ? (
+                  <span
+                    className={badgeStyle.badge}
+                    data-for="globalTip"
+                    data-tip="Taille du jeu une fois installé"
+                  >
+                    <i
+                      className={classNames(badgeStyle.icon, "fa-folder mr-2")}
+                    ></i>
+                    {e.crackDlSize}
+                  </span>
+                ) : (
+                  ""
+                )}
+                <span
+                  className={badgeStyle.badge}
+                  data-for="globalTip"
+                  data-tip={
+                    e.isOnline === "true"
+                      ? "Le jeu est disponible en multijoueur"
+                      : "Le jeu n'est accessible qu'en solo"
+                  }
+                >
+                  <i
+                    className={classNames(
+                      badgeStyle.icon,
+                      e.isOnline === "true" ? "fa-user-group" : "fa-user"
+                    )}
+                  ></i>
+                  {e.isOnline === "true" ? "Multijoueur" : "Solo"}
+                </span>
+                {/* user ? <a href="/admin/edit/${e._id" className="editGame text-light"><i className="fa-solid fa-gear"></i></a> : "" */}
               </div>
             </div>
-          ))
-        : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((e) => (
-            <div
-              className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
-              key={e}
+          </div>
+        ))
+      ) : state.loading ? (
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((e) => (
+          <div
+            className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
+            key={e}
+          >
+            <ContentLoader
+              speed={2}
+              width={loaderParams.width}
+              height={loaderParams.height}
+              viewBox={`0 0 ${loaderParams.width} ${loaderParams.height}`}
+              backgroundColor="#0000003b"
+              foregroundColor="#00000022"
+              className="relative outline-none rounded-lg"
             >
-              <ContentLoader
-                speed={2}
+              <rect
+                x="0"
+                y="0"
                 width={loaderParams.width}
                 height={loaderParams.height}
-                viewBox={`0 0 ${loaderParams.width} ${loaderParams.height}`}
-                backgroundColor="#0000003b"
-                foregroundColor="#00000022"
-                className="relative outline-none rounded-lg"
+              />
+            </ContentLoader>
+            <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
+              <ContentLoader
+                speed={2}
+                width={600}
+                height={100}
+                viewBox="0 0 600 100"
+                backgroundColor="#37415122"
+                foregroundColor="#37415144"
+                className="inline-rounded-md"
               >
-                <rect
-                  x="0"
-                  y="0"
-                  width={loaderParams.width}
-                  height={loaderParams.height}
-                />
+                <rect x={0} y={0} r={6} width={300} height={25} />
+                <rect x={0} y={50} r={6} width={600} height={20} />
+                <rect x={0} y={85} r={6} width={520} height={20} />
               </ContentLoader>
-              <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
-                <ContentLoader
-                  speed={2}
-                  width={300}
-                  height={85}
-                  viewBox="0 0 300 85"
-                  backgroundColor="#37415122"
-                  foregroundColor="#37415144"
-                  className="inline-rounded-md"
-                >
-                  <rect x="0" y="0" width={300} height={25} />
-                  <rect x="0" y="35" width={600} height={25} />
-                  <rect x="0" y="70" width={520} height={25} />
-                </ContentLoader>
-              </div>
             </div>
-          ))}
+          </div>
+        ))
+      ) : (
+        <NoConnection retry={retry} />
+      )}
     </>
   );
 }
 
 export default function GamesList() {
-  // We start with an empty list of items.
+  const [state, setState] = useState({ loading: true, success: false });
   const [games, setGames] = useState<APIGame[] | null>(null);
   const [currentItems, setCurrentItems] = useState<APIGame[] | null>(null);
   const [pageCount, setPageCount] = useState<number>(0);
@@ -194,6 +203,7 @@ export default function GamesList() {
     axios
       .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {
+        setState({ loading: false, success: true });
         setGames(
           r.data.games.sort(
             (a, b) =>
@@ -201,6 +211,9 @@ export default function GamesList() {
               new Date(a.releaseDate).getTime()
           )
         );
+      })
+      .catch((err) => {
+        setState({ loading: false, success: false });
       });
   }
 
@@ -214,7 +227,7 @@ export default function GamesList() {
   return (
     <main className="items-center mt-16 mb-10">
       <div className="container flex flex-col justify-center items-center mb-5 last:mb-0">
-        <Games currentGames={currentItems} />
+        <Games currentGames={currentItems} state={state} retry={loadGames} />
       </div>
       <ReactPaginate
         breakLabel={

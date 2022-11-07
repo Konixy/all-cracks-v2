@@ -3,14 +3,9 @@ import { useParams } from "react-router-dom";
 import config from "./config";
 import axios from "axios";
 import Md from "@uiw/react-markdown-preview";
-import { PrimaryButton, SecondaryButton } from "./Util";
+import { NoConnection, PrimaryButton, SecondaryButton } from "./Util";
 import ReactTooltip from "react-tooltip";
 import { APIGame } from "./Types";
-
-async function fetchGame(gameId: string): Promise<APIGame> {
-  const r = await axios.get(`${config.backendPath}/api/games/${gameId}`);
-  return r.data.game;
-}
 
 function showTutorial() {
   document.querySelector(".game-tuto")?.classList.toggle("hidden");
@@ -20,29 +15,43 @@ function showTutorial() {
 
 export default function Game() {
   const { gameId } = useParams();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [state, setState] = useState({ loading: true, success: false });
   const [game, setGame] = useState<APIGame | null>(null);
+
+  function fetchGame() {
+    axios
+      .get(`${config.backendPath}/api/games/${gameId ? gameId : ""}`)
+      .then((r) => {
+        const game = r.data.game;
+        if (game) {
+          document.title = `${game.name} | All-Cracks.fr`;
+          setGame(game);
+          setState({ loading: false, success: true });
+        } else {
+          document.title = `404 | All-Cracks.fr`;
+          setState({ loading: false, success: false });
+          setGame(null);
+        }
+      })
+      .catch(() => {
+        document.title = "404 | All-Cracks.fr";
+        setState({ loading: false, success: false });
+        setGame(null);
+      });
+  }
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-      const r = await fetchGame(gameId ? gameId : "");
-      if (r) {
-        document.title = `${r.name} | All-Cracks.fr`;
-        setGame(r);
-        setLoading(false);
-      } else {
-        document.title = `404 | All-Cracks.fr`;
-        setLoading(false);
-        setGame(null);
-      }
+      setState({ loading: true, success: false });
+      fetchGame();
     })();
-  }, [gameId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   game?.additionalLinks?.forEach((e) => console.log(e));
-  if (loading)
+  if (state.loading)
     return <div className="text-center text-lg my-20">Chargement...</div>;
-  if (game)
+  if (state.success && game)
     return (
       <div className="container">
         <div className="-z-10 absolute left-0 h-full w-full -mt-[120px] overflow-hidden">
@@ -117,7 +126,7 @@ export default function Game() {
               </PrimaryButton>
             </div>
             <>
-              {game.additionalLinks?.map(e => (
+              {game.additionalLinks?.map((e) => (
                 <div key={e.name} className="mt-2">
                   <div
                     data-tip={`Ce fichier requiert ${
@@ -129,9 +138,13 @@ export default function Game() {
                     fichier .{e.linkType}{" "}
                     <i className="fa-regular fa-circle-question"></i>
                   </div>
-                  <SecondaryButton href={e.link} type="href" className="text-sm">
+                  <SecondaryButton
+                    href={e.link}
+                    type="href"
+                    className="text-sm"
+                  >
                     <i className="fa-solid fa-download mr-2 -ml-1"></i>
-                    <div dangerouslySetInnerHTML={{__html: e.name}}></div>
+                    <div dangerouslySetInnerHTML={{ __html: e.name }}></div>
                   </SecondaryButton>
                 </div>
               ))}
@@ -141,13 +154,18 @@ export default function Game() {
             <div className="text-2xl">A propos de {game.name} :</div>
             <div className="text-lg mx-20 my-10">{game.description}</div>
             <div className="text-left mx-20">
-              Derniere mise a jour : {game.lastUpdate}<br/>
-              Date de sortie du jeux : {game.release}<br/>
+              Derniere mise a jour : {game.lastUpdate}
+              <br />
+              Date de sortie du jeux : {game.release}
+              <br />
               Taille du jeux une fois installé : {game.crackDlSize}
             </div>
           </div>
         </main>
       </div>
     );
-  else return <div className="text-center text-lg my-20">Aucun jeu trouvé</div>;
+  else if (state.success && !state.loading && !game)
+    return <div className="text-center text-lg my-20">Aucun jeu trouvé</div>;
+  else
+    return <NoConnection retry={() => fetchGame()} />;
 }

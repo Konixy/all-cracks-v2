@@ -4,8 +4,10 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { APIGame, APIResponse } from "./Types";
 import axios, { AxiosResponse } from "axios";
 import config from "./config";
+import { NoConnection } from "./Util";
 
 export default function Admin() {
+  const [state, setState] = useState({ loading: true, success: false });
   const [games, setGames] = useState<APIGame[] | null>(null);
 
   useEffect(() => {
@@ -16,6 +18,7 @@ export default function Admin() {
     axios
       .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {
+        setState({ loading: false, success: true });
         setGames(
           r.data.games.sort(
             (a, b) =>
@@ -23,15 +26,24 @@ export default function Admin() {
               new Date(a.lastUpdateDate).getTime()
           )
         );
+      })
+      .catch(() => {
+        setState({ loading: false, success: false });
       });
   }
 
   document.title = "Admin Panel | All-Cracks.fr";
   return (
     <div className="text-center items-center justify-center flex flex-col my-20 mx-10">
-      <div className="w-80">
-        {games ? <DropDown options={games} /> : <>Loading games...</>}
-      </div>
+      {state.success && games ? (
+        <div className="w-80">
+          <DropDown options={games} />
+        </div>
+      ) : state.loading ? (
+        <>Loading games...</>
+      ) : (
+        <NoConnection retry={loadGames} />
+      )}
     </div>
   );
 }
