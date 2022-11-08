@@ -7,11 +7,25 @@ import axios from "axios";
 import ContentLoader from "react-content-loader";
 import Search from "./Search";
 import { classNames } from "./Util";
+import { APIGame } from "./Types";
 
 export default class Header extends Component {
-  constructor(props) {
+  state: {
+    nav: {
+      name: string;
+      type: string;
+      href: string;
+      dropdownItems?: {
+        type: string;
+        name?: string;
+        href?: string;
+        text?: string;
+      }[];
+    }[];
+  };
+  props!: { path: string; };
+  constructor(props: {path: string}) {
     super(props);
-    this.props = props;
     this.state = {
       nav: [
         { name: "Acceuil", type: "link", href: "/" },
@@ -39,26 +53,48 @@ export default class Header extends Component {
     axios
       .get(`${config.backendPath}/api/header/games`)
       .then((response) => {
-        const dropdownItems = this.state.nav.find(
-          (e) => e.name === "Jeux"
-        ).dropdownItems;
-        dropdownItems.pop();
-        response.data.games.forEach((e) => {
-          dropdownItems.push({
-            type: "link",
-            name: e.name,
-            href: "/game/" + e._id,
+        let dropdownItems:
+          | {
+              type: string;
+              name?: string;
+              href?: string;
+              text?: string;
+            }[]
+          | undefined;
+        const item = this.state.nav.find((e) => e.name === "Jeux");
+        if (item) {
+          dropdownItems = item.dropdownItems;
+        }
+        if (dropdownItems) {
+          dropdownItems.pop();
+          response.data.games.forEach((e: APIGame) => {
+            dropdownItems?.push({
+              type: "link",
+              name: e.name,
+              href: "/game/" + e._id,
+            });
           });
-        });
+        }
         this.setState(this.state);
       })
       .catch((e) => {
         console.log("failed to fetch");
-        const dropdownItems = this.state.nav.find(
-          (e) => e.name === "Jeux"
-        ).dropdownItems;
-        dropdownItems.pop();
-        dropdownItems.push({ type: "error" });
+        let dropdownItems:
+          | {
+              type: string;
+              name?: string;
+              href?: string;
+              text?: string;
+            }[]
+          | undefined;
+        const item = this.state.nav.find((e) => e.name === "Jeux");
+        if (item) {
+          dropdownItems = item.dropdownItems;
+        }
+        if (dropdownItems) {
+          dropdownItems.pop();
+          dropdownItems.push({ type: "error" });
+        }
         this.setState(this.state);
       });
   };
@@ -202,13 +238,13 @@ export default class Header extends Component {
                                 leaveTo="transform opacity-0 scale-95"
                               >
                                 <Menu.Items className="absolute -right-[50%] translate-x-[10px] z-10 mt-2 w-48 origin-center rounded-md bg-slate-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                  {item.dropdownItems.map((e) => (
+                                  {item.dropdownItems?.map((e) => (
                                     <Menu.Item key={e.name}>
                                       {({ active }) =>
                                         e.type === "link" ? (
                                           <Link
                                             key={e.name}
-                                            to={e.href}
+                                            to={e.href || "/"}
                                             className={classNames(
                                               active ? "bg-slate-700" : "",
                                               "block px-3 mx-2 rounded-md py-2 my-1 text-sm text-white text-ellipsis overflow-hidden whitespace-nowrap select-none"
@@ -385,12 +421,15 @@ export default class Header extends Component {
               </div>
 
               <Disclosure.Panel className="sm:hidden">
-                <div className="space-y-1 px-2 pt-2 pb-3 text-center">
-                  <div className="mb-3 inset-y-0"><Search /></div>
+                <div className="space-y-1 px-2 pt-2 pb-3 text-center menu-shadow">
+                  <div className="mb-3 inset-y-0">
+                    <Search />
+                  </div>
                   {this.state.nav.map((item) => (
                     <Disclosure.Button
                       key={item.name}
-                      as={item.type === 'href' ? "a" : Link}
+                      as={item.type === "href" ? "a" : Link}
+                      // @ts-ignore
                       href={item.href}
                       to={item.href}
                       target={item.type === "href" ? "_blank" : undefined}
@@ -418,7 +457,7 @@ export default class Header extends Component {
 }
 
 export function Nav() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
     <div className="bg-slate-900">

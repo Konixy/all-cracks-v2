@@ -27,7 +27,7 @@ function Games({
   };
   const badgeStyle: { badge: string; icon: string } = {
     badge:
-      "bg-gray-300 text-black py-1 px-2 rounded-lg font-bold text-[12.2px]",
+      "bg-gray-300 text-black py-1 px-2 rounded-lg font-bold text-[12.2px] mt-2 sm:mt-0",
     icon: "fa-solid mr-2",
   };
   return (
@@ -35,7 +35,7 @@ function Games({
       {state.success && currentGames ? (
         currentGames.map((e) => (
           <div
-            className="rounded-lg flex flex-row bg-[#0000002c] w-[850px] h-[240px] mb-5"
+            className="rounded-lg flex flex-col items-center md:flex-row bg-[#0000002c] w-full md:w-[850px] md:h-[240px] mb-5"
             key={e.name}
           >
             <div className="block w-[180px]">
@@ -52,12 +52,12 @@ function Games({
                 </Tilt>
               </Link>
             </div>
-            <div className="relative flex flex-col justify-between px-10 py-6 whitespace-normal w-[670px]">
+            <div className="relative flex flex-col md:justify-between px-10 py-6 whitespace-normal md:w-[670px] md:h-full">
               <Link to={`/game/${e._id}`} className="text-lg">
                 {e.name}
               </Link>
               <p className="text-sm text-description">{e.description}</p>
-              <div className="badges flex flex-row justify-between">
+              <div className="badges flex flex-col items-center sm:flex-row justify-evenly md:justify-between">
                 <ReactTooltip
                   id="globalTip"
                   place="top"
@@ -214,6 +214,7 @@ export default function GamesList() {
         );
       })
       .catch((err) => {
+        console.log('an error occured')
         setState({ loading: false, success: false });
       });
   }
