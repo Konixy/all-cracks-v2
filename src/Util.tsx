@@ -104,7 +104,7 @@ export function NoConnection({ retry }: { retry: () => void }) {
   return (
     <div className="my-20 text-center">
       <div>
-        <i className="fa-solid fa-warning text-8xl text-orange-400"></i>{" "}
+        <i className="fa-solid fa-warning text-8xl text-orange-400"></i>
         <div className="text-3xl mt-4">Connexion impossible</div>
       </div>
       <div className="text-md text-slate-400 mt-4">

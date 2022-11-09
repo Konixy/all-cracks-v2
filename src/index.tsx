@@ -22,7 +22,7 @@ const routes: RouteElement[] = [
   { path: "/", element: Home },
   {
     path: "/games",
-    element: Games
+    element: Games,
   },
   {
     path: "/game/:gameId",
@@ -30,17 +30,17 @@ const routes: RouteElement[] = [
   },
   {
     path: "/dmca",
-    element: DMCA
+    element: DMCA,
   },
   {
     path: "/admin",
-    element: Admin
+    element: Admin,
   },
   {
     path: "*",
     element: NotFound,
-    noFooter: true
-  }
+    noFooter: true,
+  },
 ];
 
 class App extends React.Component {
@@ -67,5 +67,7 @@ class App extends React.Component {
   }
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(<App />);

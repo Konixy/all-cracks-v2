@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { FormEvent, Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { APIGame, APIResponse } from "./Types";
@@ -6,7 +6,81 @@ import axios, { AxiosResponse } from "axios";
 import config from "./config";
 import { NoConnection } from "./Util";
 
-export default function Admin() {
+axios.defaults.withCredentials = true;
+
+interface State {
+  loading: boolean;
+  logged: boolean;
+  user?: {
+    email: string;
+  };
+  error?: string;
+}
+
+interface AdminAPIResponse {
+  success: boolean;
+  message?: string;
+  user?: { email: string };
+}
+
+export default function Init() {
+  const [state, setState] = useState<State>({ loading: true, logged: false });
+  const [data, setData] = useState<{ email: string; password: string } | null>(
+    null
+  );
+  function login(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (data) {
+      axios
+        .post(`${config.backendPath}/api/admin/login`, data)
+        .then((r: AxiosResponse<AdminAPIResponse>) => {
+          if (r.data.success) {
+            setState({ logged: true, loading: false, user: r.data.user });
+          } else {
+            setState({ logged: false, error: r.data.message, loading: false });
+          }
+        });
+    }
+  }
+  function checkConnected() {
+    axios
+      .get(`${config.backendPath}/api/admin/info`)
+      .then((r: AxiosResponse<AdminAPIResponse>) => {});
+  }
+  useEffect(() => {
+    checkConnected();
+  }, [state]);
+  return (
+    <>
+      {state.logged ? (
+        <Admin />
+      ) : (
+        <form onSubmit={login}>
+          {state.error ? <div className="text-red-500">{state.error}</div> : ""}
+          <input
+            type="email"
+            name="email"
+            onInput={(e) =>
+              // @ts-ignore
+              setData({ email: e.target.value, password: data?.password || "" })
+            }
+          />
+          <input
+            type="password"
+            name="password"
+            onInput={(e) =>
+              // @ts-ignore
+              setData({ password: e.target.value, email: data?.email || "" })
+            }
+          />
+          <input type="submit" value="Log in" />
+        </form>
+      )}
+    </>
+  );
+}
+
+function Admin() {
   const [state, setState] = useState({ loading: true, success: false });
   const [games, setGames] = useState<APIGame[] | null>(null);
 
@@ -49,7 +123,7 @@ export default function Admin() {
 }
 
 function DropDown({ options }: { options: APIGame[] }) {
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState<APIGame>(options[0]);
   const [query, setQuery] = useState("");
   let filteredPeople = options;
 
@@ -66,7 +140,7 @@ function DropDown({ options }: { options: APIGame[] }) {
     <div className="block top-16 w-72">
       <Combobox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+          <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-sky-300 sm:text-sm">
             <Combobox.Input
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
               displayValue={(person: APIGame) => person.name}
@@ -97,7 +171,7 @@ function DropDown({ options }: { options: APIGame[] }) {
                     key={person._id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-teal-600 text-white" : "text-gray-900"
+                        active ? "bg-sky-600 text-white" : "text-gray-900"
                       }`
                     }
                     value={person}
@@ -114,7 +188,7 @@ function DropDown({ options }: { options: APIGame[] }) {
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? "text-white" : "text-teal-600"
+                              active ? "text-white" : "text-sky-600"
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
