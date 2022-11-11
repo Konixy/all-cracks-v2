@@ -25,7 +25,7 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
-COPY nginx/default.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
 EXPOSE 80
