@@ -190,7 +190,7 @@ export default function GamesList() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    setState({loading: true, success: false})
+    setState({ loading: true, success: false });
     loadGames();
   }, []);
 
@@ -214,7 +214,7 @@ export default function GamesList() {
         );
       })
       .catch((err) => {
-        console.log('an error occured')
+        console.log("an error occured");
         setState({ loading: false, success: false });
       });
   }
