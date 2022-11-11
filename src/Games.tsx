@@ -182,7 +182,7 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
                   speed={2}
                   width={300}
                   height={25}
-                  viewBox="0 0 300 25"
+                  viewBox="0 0 300 25" 
                   backgroundColor="#37415122"
                   foregroundColor="#37415144"
                   className="rounded-md"
