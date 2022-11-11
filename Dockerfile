@@ -4,20 +4,30 @@ WORKDIR /app
 
 COPY . .
 
-RUN sudo apt update; sudo apt full-upgrade; sudo apt install git
+RUN apk update
 
-RUN git config pull.rebase false
-
-RUN git pull
+RUN npm i -g npm@latest
 
 RUN npm i --legacy-peer-deps --force
 
-RUN cd /node_modules/react-tilted; touch index.d.ts; echo "declare module 'react-tilted';" > index.d.ts
+RUN cd /app/node_modules/react-tilted; touch index.d.ts; echo "declare module 'react-tilted';" > index.d.ts
 
 RUN npm run build
 
-ENV NODE_ENV production
+# ENV NODE_ENV production
 
-EXPOSE 3000
+# EXPOSE 80
 
-CMD [ "npx", "serve", "build", "" ]
+# CMD [ "npx", "serve", "-s", "build", "-l", "80" ]
+
+FROM nginx:alpine
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

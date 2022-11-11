@@ -5,39 +5,19 @@ import config from "./config";
 import ContentLoader from "react-content-loader";
 import Tilt from "react-tilted";
 import axios, { AxiosResponse } from "axios";
-import { classNames } from "./Util";
+import { classNames, NoConnection } from "./Util";
 import ReactTooltip from "react-tooltip";
+import { APIGame, APIResponse } from "./Types";
 
-interface Game {
-  _id: string;
-  name: string;
-  release: string;
-  releaseDate: string;
-  lastUpdate: string;
-  lastUpdateDate: string;
-  description?: string;
-  tutorial?: string;
-  bgUrl?: string;
-  coverUrl?: string;
-  videoId?: string;
-  crackDlLink?: string;
-  crackDlSize?: string;
-  crackDlLinkType?: string;
-  isOnline?: string;
-  additionalLinks: AdditionnalLink[];
-}
-
-interface AdditionnalLink {
-  name: string;
-  link: string;
-  linkType?: "rar" | "torrent";
-}
-
-interface APIResponse {
-  games: Game[];
-}
-
-function Games({ currentGames }: { currentGames: Game[] | null }) {
+function Games({
+  currentGames,
+  state,
+  retry,
+}: {
+  currentGames: APIGame[] | null;
+  state: { success: boolean; loading: boolean };
+  retry: () => void;
+}) {
   useEffect(() => {
     document.title = "Jeux | All-Cracks.fr";
   }, []);
@@ -47,7 +27,7 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
   };
   const badgeStyle: { badge: string; icon: string } = {
     badge:
-      "bg-gray-300 text-black py-1 px-2 rounded-lg font-bold text-[12.2px]",
+      "bg-gray-300 text-black py-1 px-2 rounded-lg font-bold text-[12.2px] mt-2 sm:mt-0",
     icon: "fa-solid mr-2",
   };
   return (
@@ -202,9 +182,9 @@ function Games({ currentGames }: { currentGames: Game[] | null }) {
 }
 
 export default function GamesList() {
-  // We start with an empty list of items.
-  const [games, setGames] = useState<Game[] | null>(null);
-  const [currentItems, setCurrentItems] = useState<Game[] | null>(null);
+  const [state, setState] = useState({ loading: true, success: false });
+  const [games, setGames] = useState<APIGame[] | null>(null);
+  const [currentItems, setCurrentItems] = useState<APIGame[] | null>(null);
   const [pageCount, setPageCount] = useState<number>(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
@@ -212,6 +192,7 @@ export default function GamesList() {
   const itemsPerPage = 10;
 
   useEffect(() => {
+    setState({loading: true, success: false})
     loadGames();
   }, []);
 
@@ -225,7 +206,18 @@ export default function GamesList() {
     axios
       .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {
-        setGames(r.data.games);
+        setState({ loading: false, success: true });
+        setGames(
+          r.data.games.sort(
+            (a, b) =>
+              new Date(b.releaseDate).getTime() -
+              new Date(a.releaseDate).getTime()
+          )
+        );
+      })
+      .catch((err) => {
+        console.log('an error occured')
+        setState({ loading: false, success: false });
       });
   }
 
@@ -239,7 +231,7 @@ export default function GamesList() {
   return (
     <main className="items-center mt-16 mb-10">
       <div className="container flex flex-col justify-center items-center mb-5 last:mb-0">
-        <Games currentGames={currentItems} />
+        <Games currentGames={currentItems} state={state} retry={loadGames} />
       </div>
       <ReactPaginate
         breakLabel={

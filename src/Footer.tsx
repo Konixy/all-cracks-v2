@@ -13,7 +13,7 @@ export default class Footer extends Component {
   constructor(props: {} | Readonly<{}>) {
     super(props);
     this.state = {
-      style: "text-gray-400 hover:text-white transition-all",
+      style: "text-slate-400 hover:text-white transition-all mb-2 md:mb-0",
       nav: [
         {
           name: "Nous contacter",
@@ -33,7 +33,7 @@ export default class Footer extends Component {
   render() {
     return (
       <footer>
-        <ul className="flex flex-row list-none justify-evenly mx-40">
+        <ul className="flex flex-col items-center md:flex-row list-none justify-between lg:justify-evenly mx-10 sm:mx-20 md:mx-40">
           {this.state.nav.map((e) =>
             e.type === "href" ? (
               <li key={e.name}>

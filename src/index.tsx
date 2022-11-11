@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./styles/index.scss";
@@ -9,21 +9,22 @@ import Games from "./Games";
 import Game from "./Game";
 import NotFound from "./NotFound";
 import DMCA from "./DMCA";
+import Admin from "./Admin";
+import { UserContext } from "./User.context";
+import { APIUser } from "./Types";
 
 interface RouteElement {
   path: string;
   element: () => JSX.Element;
-  name?: string;
   noHeader?: boolean;
   noFooter?: boolean;
 }
 
 const routes: RouteElement[] = [
-  { path: "/", element: Home, name: "Accueil" },
+  { path: "/", element: Home },
   {
     path: "/games",
     element: Games,
-    name: "Jeux"
   },
   {
     path: "/game/:gameId",
@@ -32,19 +33,23 @@ const routes: RouteElement[] = [
   {
     path: "/dmca",
     element: DMCA,
-    name: "DMCA"
+  },
+  {
+    path: "/admin",
+    element: Admin,
   },
   {
     path: "*",
     element: NotFound,
-    name: "404"
-  }
+    noFooter: true,
+  },
 ];
 
-class App extends React.Component {
-  render() {
-    return (
-      <Router>
+function App() {
+  const [user, setUser] = useState<APIUser | null>(null);
+  return (
+    <Router>
+      <UserContext.Provider value={{user, setUser}}>
         <Routes>
           {routes.map((route) => (
             <Route
@@ -52,10 +57,6 @@ class App extends React.Component {
               path={route.path}
               element={
                 <>
-                  {() => {
-                    if(route.name) document.title = `${route.name} | All-Cracks.fr`
-                    return <></>
-                  }}
                   {route.noHeader ? <></> : <Header path={route.path} />}
                   <route.element />
                   {route.noFooter ? <></> : <Footer />}
@@ -64,10 +65,12 @@ class App extends React.Component {
             />
           ))}
         </Routes>
-      </Router>
-    );
-  }
+      </UserContext.Provider>
+    </Router>
+  );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(<App />);
