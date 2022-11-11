@@ -27,3 +27,7 @@ interface AdditionnalLink {
 export interface APIResponse {
   games: APIGame[];
 }
+
+export interface APIUser {
+  email: string;
+}

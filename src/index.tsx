@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./styles/index.scss";
@@ -10,6 +10,8 @@ import Game from "./Game";
 import NotFound from "./NotFound";
 import DMCA from "./DMCA";
 import Admin from "./Admin";
+import { UserContext } from "./User.context";
+import { APIUser } from "./Types";
 
 interface RouteElement {
   path: string;
@@ -43,10 +45,11 @@ const routes: RouteElement[] = [
   },
 ];
 
-class App extends React.Component {
-  render() {
-    return (
-      <Router>
+function App() {
+  const [user, setUser] = useState<APIUser | null>(null);
+  return (
+    <Router>
+      <UserContext.Provider value={{user, setUser}}>
         <Routes>
           {routes.map((route) => (
             <Route
@@ -62,9 +65,9 @@ class App extends React.Component {
             />
           ))}
         </Routes>
-      </Router>
-    );
-  }
+      </UserContext.Provider>
+    </Router>
+  );
 }
 
 const root = ReactDOM.createRoot(

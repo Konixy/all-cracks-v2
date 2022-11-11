@@ -1,30 +1,29 @@
 import React, { FormEvent, Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { APIGame, APIResponse } from "./Types";
+import { APIGame, APIResponse, APIUser } from "./Types";
 import axios, { AxiosResponse } from "axios";
 import config from "./config";
 import { NoConnection } from "./Util";
+import { useUser } from "./User.context";
 
 axios.defaults.withCredentials = true;
 
 interface State {
   loading: boolean;
   logged: boolean;
-  user?: {
-    email: string;
-  };
   error?: string;
 }
 
 interface AdminAPIResponse {
   success: boolean;
   message?: string;
-  user?: { email: string };
+  user?: APIUser;
 }
 
 export default function Init() {
   const [state, setState] = useState<State>({ loading: true, logged: false });
+  const {user, setUser} = useUser();
   const [data, setData] = useState<{ email: string; password: string } | null>(
     null
   );
@@ -32,10 +31,11 @@ export default function Init() {
     event.preventDefault();
     if (data) {
       axios
-        .post(`${config.backendPath}/api/admin/login`, data)
+        .post(`${config.backendPath}/api/admin/login`, data, {withCredentials: false})
         .then((r: AxiosResponse<AdminAPIResponse>) => {
           if (r.data.success) {
-            setState({ logged: true, loading: false, user: r.data.user });
+            setState({ logged: true, loading: false });
+            setUser(r.data.user ? r.data.user : null)
           } else {
             setState({ logged: false, error: r.data.message, loading: false });
           }
@@ -44,16 +44,25 @@ export default function Init() {
   }
   function checkConnected() {
     axios
-      .get(`${config.backendPath}/api/admin/info`)
-      .then((r: AxiosResponse<AdminAPIResponse>) => {});
+      .get(`${config.backendPath}/api/admin/info`, {withCredentials: true})
+      .then((r: AxiosResponse<AdminAPIResponse>) => {
+        if(r.data.success) {
+          setState({ loading: false, logged: true })
+          setUser(r.data.user ? r.data.user : null)
+        } else {
+          setState({ loading: false, logged: false, error: r.data.message });
+        }
+      });
   }
   useEffect(() => {
     checkConnected();
-  }, [state]);
+  }, []);
   return (
     <>
       {state.logged ? (
         <Admin />
+      ) : state.loading ? (
+        <div>Chargement...</div>
       ) : (
         <form onSubmit={login}>
           {state.error ? <div className="text-red-500">{state.error}</div> : ""}
@@ -80,7 +89,8 @@ export default function Init() {
   );
 }
 
-function Admin() {
+function Admin(): JSX.Element {
+  const {user} = useUser()
   const [state, setState] = useState({ loading: true, success: false });
   const [games, setGames] = useState<APIGame[] | null>(null);
 
@@ -90,7 +100,7 @@ function Admin() {
 
   function loadGames() {
     axios
-      .get(`${config.backendPath}/api/games`)
+      .get(`${config.backendPath}/api/admin/gameselector`)
       .then((r: AxiosResponse<APIResponse>) => {
         setState({ loading: false, success: true });
         setGames(
@@ -109,6 +119,7 @@ function Admin() {
   document.title = "Admin Panel | All-Cracks.fr";
   return (
     <div className="text-center items-center justify-center flex flex-col my-20 mx-10">
+      <div>Logged in as {user?.email}</div>
       {state.success && games ? (
         <div className="w-80">
           <DropDown options={games} />
