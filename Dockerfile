@@ -26,13 +26,13 @@ COPY --from=builder /app/build /usr/share/nginx/html
 
 COPY /letsencrypt /etc/letsencrypt
 
-RUN apk add --update python3 py3-pip
+# RUN apk add --update python3 py3-pip
 
-RUN apk add certbot
+# RUN apk add certbot
 
-RUN pip install certbot-nginx
+# RUN pip install certbot-nginx
 
-RUN certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
+# RUN certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
 
 EXPOSE 80
 
