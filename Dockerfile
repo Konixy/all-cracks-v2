@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN ls
 
-COPY . .
+COPY ../home/All-Cracks .
 
 RUN apk update
 
