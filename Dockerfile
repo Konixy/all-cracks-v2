@@ -24,9 +24,7 @@ RUN rm -rf ./*
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
-RUN mkdir /etc/letsencrypt
-
-COPY /etc/letsencrypt /etc/letsencrypt
+COPY ../../etc/letsencrypt /etc/letsencrypt
 
 # RUN apk add --update python3 py3-pip
 
