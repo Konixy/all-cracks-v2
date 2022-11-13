@@ -8,4 +8,4 @@ const config = {
     titleSufix: " • All-Cracks.fr"
 }
 
-export default config;
+export default config
