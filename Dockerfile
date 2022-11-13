@@ -20,6 +20,10 @@ RUN npm run build
 
 # CMD [ "npx", "serve", "-s", "build", "-l", "80" ]
 
+RUN apk add certbot
+
+RUN sudo certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
+
 FROM nginx:alpine
 
 WORKDIR /usr/share/nginx/html
