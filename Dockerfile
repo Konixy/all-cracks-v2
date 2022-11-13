@@ -20,10 +20,6 @@ RUN npm run build
 
 # CMD [ "npx", "serve", "-s", "build", "-l", "80" ]
 
-RUN apk add certbot
-
-RUN certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
-
 FROM nginx:alpine
 
 WORKDIR /usr/share/nginx/html
@@ -31,6 +27,10 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/build /usr/share/nginx/html
+
+RUN apk add certbot
+
+RUN certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
 
 EXPOSE 80
 
