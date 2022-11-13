@@ -22,7 +22,7 @@ RUN npm run build
 
 RUN apk add certbot
 
-RUN sudo certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
+RUN certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
 
 FROM nginx:alpine
 
