@@ -9,8 +9,7 @@ import { APIGame } from "./Types";
 
 function showTutorial() {
   document.querySelector(".game-tuto")?.classList.toggle("hidden");
-  document.querySelector(".tutorial-icon")?.classList.toggle("fa-chevron-down");
-  document.querySelector(".tutorial-icon")?.classList.toggle("fa-chevron-up");
+  document.querySelector(".tutorial-icon")?.classList.toggle("show");
 }
 
 export default function Game() {
