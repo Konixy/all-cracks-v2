@@ -2,8 +2,6 @@ FROM node:19-alpine as builder
 
 WORKDIR /app
 
-RUN ls
-
 COPY ../home/All-Cracks .
 
 RUN apk update
