@@ -10,6 +10,8 @@ RUN cd /app/node_modules/react-tilted; touch index.d.ts; echo "declare module 'r
 
 RUN npm run build
 
+RUN npx tailwindcss build /build/index.scss -o main.css
+
 # ENV NODE_ENV production
 
 # EXPOSE 80
