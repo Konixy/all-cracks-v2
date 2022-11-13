@@ -28,7 +28,7 @@ RUN rm -rf ./*
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
-RUN apk add certbot
+RUN apk add certbot python3-certbot-nginx
 
 RUN certbot --nginx -d all-cracks.fr -d www.all-cracks.fr --agree-tos -m konixy.p@gmail.com
 
