@@ -14,20 +14,20 @@ RUN cd /app/node_modules/react-tilted; touch index.d.ts; echo "declare module 'r
 
 RUN npm run build
 
-ENV NODE_ENV production
-
-EXPOSE 80
-
-CMD [ "npx", "serve", "-s", "build", "-l", "80" ]
-
-# FROM nginx:alpine
-
-# WORKDIR /usr/share/nginx/html
-
-# RUN rm -rf ./*
-# COPY nginx.conf /etc/nginx/nginx.conf
-# COPY --from=builder /app/build /usr/share/nginx/html
+# ENV NODE_ENV production
 
 # EXPOSE 80
 
-# ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# CMD [ "npx", "serve", "-s", "build", "-l", "80" ]
+
+FROM nginx:alpine
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
