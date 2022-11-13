@@ -2,7 +2,7 @@ FROM node:19-alpine as builder
 
 WORKDIR /app
 
-COPY . .
+COPY /home/All-Cracks .
 
 RUN apk update
 
@@ -24,7 +24,7 @@ RUN rm -rf ./*
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/build /usr/share/nginx/html
 
-ADD ../../etc/letsencrypt /etc/letsencrypt
+ADD /etc/letsencrypt /etc/letsencrypt
 
 # RUN apk add --update python3 py3-pip
 
