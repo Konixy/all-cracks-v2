@@ -94,13 +94,16 @@ export default function Search() {
         )}
       />
       {state ? (
-        <div className="absolute flex flex-col left-0 top-12">
+        <div className="absolute flex flex-col left-0 top-12 bg-slate-700/75 p-4 rounded-md">
           <Hits
             hitComponent={({ hit }: Hit) => {
               return (
-                <Link to={`/game/${hit._id}`} className="z-50 mt-10 cursor-pointer flex flex-row" onClick={closeSearch}>
+                <Link to={`/game/${hit._id}`} className="z-50 mt-10 cursor-pointer flex flex-row hover:bg-slate-600/75" onClick={closeSearch}>
                   <img src={hit.coverUrl} alt={hit.name} width="90" height="128" />
-                  <Highlight attribute="name" hit={hit}></Highlight>
+                  <div>
+                  <Highlight className="ml-2 text-ellipsis" attribute="name" hit={hit}></Highlight>
+                    <div className="bg-white text-black">Accéder au jeu</div>
+                  </div>
                 </Link>
               );
             }}

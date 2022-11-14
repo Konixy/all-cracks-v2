@@ -25,7 +25,7 @@ function Games({
     width: 180,
     height: 240,
   };
-  const badgeStyle: { badge: string; icon: string } = {
+  const badgeStyle = {
     badge:
       "bg-gray-300 text-black py-1 px-2 rounded-lg font-bold text-[12.2px] mt-2 sm:mt-0",
     icon: "fa-solid mr-2",
@@ -64,6 +64,14 @@ function Games({
                   effect="solid"
                   backgroundColor="#111827"
                 />
+                <span
+                  className={badgeStyle.badge}
+                  data-tip="Jeux tésté par notre équipe et certifié sans virus."
+                  data-for="globalTip"
+                >
+                  <i className={classNames(badgeStyle.icon, "fa-lock")}></i>
+                  Sécurisé
+                </span>
                 {e.release ? (
                   <>
                     <span
