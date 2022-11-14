@@ -47,7 +47,7 @@ export default function Game() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId]);
 
-  game?.additionalLinks?.forEach((e) => console.log(e));
+  
   if (state.loading)
     return <div className="text-center text-lg my-20">Chargement...</div>;
   if (state.success && game)
