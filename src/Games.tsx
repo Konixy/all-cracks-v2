@@ -66,7 +66,7 @@ function Games({
                 />
                 <span
                   className={badgeStyle.badge}
-                  data-tip="Jeux tésté par notre équipe et certifié sans virus."
+                  data-tip="Jeu tésté par notre équipe et certifié sans virus."
                   data-for="globalTip"
                 >
                   <i className={classNames(badgeStyle.icon, "fa-lock")}></i>
