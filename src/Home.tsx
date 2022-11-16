@@ -63,11 +63,11 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full mt-40 py-20 bg-gradient-to-tr from-green-200  to-blue-200">
-        <h1 className="text-2xl text-slate-800">Nos dernières sorties :</h1>
-        <div className="flex flex-col md:flex-row items-center justify-evenly lg:mx-10">
+        <h1 className="text-2xl font-semibold text-slate-800">Nos dernières sorties :</h1>
+        <div className="flex flex-col md:flex-row items-center justify-evenly lg:mx-10 mt-10">
           {state.success && games
             ? games.map((e) => (
-                <div className="bg-slate-500">
+                <div className="bg-slate-500/50 flex flex-row">
                   <div className="block w-[180px]">
                     <Link to={`/game/${e._id}`} className="w-[180px]">
                       <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
@@ -82,14 +82,12 @@ export default function Home() {
                       </Tilt>
                     </Link>
                   </div>
-                  <div className="relative flex flex-col md:justify-between px-10 py-6 whitespace-normal md:w-[670px] md:h-full">
+                  <div className="relative flex flex-col md:justify-between px-10 py-6 whitespace-normal">
                     <Link to={`/game/${e._id}`} className="text-lg">
                       {e.name}
                     </Link>
                     <p className="text-sm text-description">{e.description}</p>
-                    <div className="bg-slate-200 px-2 py-1 text-black rounded-lg">
-                      Découvrir <i className="fa-solid fa-arrow-right"></i>
-                    </div>
+                    <Link to={`/game/${e._id}`} className="bg-slate-200 px-2 py-1 text-black rounded-lg">Découvrir <i className="fa-solid fa-arrow-right"></i></Link>
                   </div>
                 </div>
               ))
