@@ -75,6 +75,7 @@ export default function Search() {
         className="search-input"
         inputMode="search"
         onInput={searchInput}
+        translate="yes"
         // onSubmit={submitSearch}
         defaultValue={params.get("search") || ""}
         submitIconComponent={() => (
@@ -96,7 +97,15 @@ export default function Search() {
       {state ? (
         <div className="absolute flex flex-col left-0 top-12 bg-slate-700/75 p-4 rounded-md">
           <Hits
-            hitComponent={({ hit }: Hit) => {
+            hitComponent={function HitComponent({ hit }: Hit) {
+              const input = document.querySelector('.search-input input[type="submit"]');
+              useEffect(() => {
+                input?.addEventListener("submit", e => {
+                  if(hit.__position === 0) {
+                    
+                  }
+                })
+              }, []);
               return (
                 <Link to={`/game/${hit._id}`} className="z-50 mt-10 cursor-pointer flex flex-row hover:bg-slate-600/75" onClick={closeSearch}>
                   <img src={hit.coverUrl} alt={hit.name} width="90" height="128" />
