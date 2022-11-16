@@ -19,7 +19,7 @@ function Games({
   retry: () => void;
 }) {
   useEffect(() => {
-    document.title = "Jeux | All-Cracks.fr";
+    document.title = `Jeux${config.titleSufix}`;
   }, []);
   const loaderParams = {
     width: 180,

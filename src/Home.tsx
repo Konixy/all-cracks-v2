@@ -26,7 +26,7 @@ export default function Home() {
         );
       }).catch(err => {
         console.log(err)
-        // setState({loading: false, success: false})
+        setState({loading: false, success: false})
       })
   }
 

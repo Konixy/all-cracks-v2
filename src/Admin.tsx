@@ -23,7 +23,7 @@ interface AdminAPIResponse {
 
 export default function Init() {
   const [state, setState] = useState<State>({ loading: true, logged: false });
-  const {user, setUser} = useUser();
+  const {setUser} = useUser();
   const [data, setData] = useState<{ email: string; password: string } | null>(
     null
   );
@@ -55,7 +55,9 @@ export default function Init() {
       });
   }
   useEffect(() => {
+    document.title = `Admin Panel${config.titleSufix}`;
     checkConnected();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -116,7 +118,6 @@ function Admin(): JSX.Element {
       });
   }
 
-  document.title = "Admin Panel | All-Cracks.fr";
   return (
     <div className="text-center items-center justify-center flex flex-col my-20 mx-10">
       <div>Logged in as {user?.email}</div>

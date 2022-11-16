@@ -23,17 +23,17 @@ export default function Game() {
       .then((r) => {
         const game = r.data.game;
         if (game) {
-          document.title = `${game.name} | All-Cracks.fr`;
+          document.title = `${game.name}${config.titleSufix}`;
           setGame(game);
           setState({ loading: false, success: true });
         } else {
-          document.title = `404 | All-Cracks.fr`;
+          document.title = `404${config.titleSufix}`;
           setState({ loading: false, success: false });
           setGame(null);
         }
       })
       .catch(() => {
-        document.title = "404 | All-Cracks.fr";
+        document.title = `404${config.titleSufix}`;
         setState({ loading: false, success: false });
         setGame(null);
       });
