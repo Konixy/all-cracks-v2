@@ -91,7 +91,7 @@ export default function Home() {
                   </div>
                 </div>
               ))
-            : state.loading ? [1, 2].map((e) => (
+            : state.loading ? [1,2].map((e) => (
                 <div className="flex flex-row bg-slate-600/50 h-[240px] rounded-lg" key={e}>
                   <ContentLoader
                     speed={2}
