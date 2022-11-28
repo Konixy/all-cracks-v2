@@ -14,9 +14,9 @@ RUN npm run build
 
 ENV NODE_ENV production
 
-EXPOSE 80
+EXPOSE 1000
 
-CMD [ "npx", "serve", "-s", "build", "-l", "80" ]
+CMD [ "npx", "serve", "-s", "build", "-l", "1000" ]
 
 # FROM nginx:alpine
 
