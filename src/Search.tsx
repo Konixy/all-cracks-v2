@@ -102,7 +102,7 @@ export default function Search() {
               useEffect(() => {
                 input?.addEventListener("submit", e => {
                   if(hit.__position === 0) {
-                    
+                    console.log('the first hit is', hit)
                   }
                 })
               }, []);
