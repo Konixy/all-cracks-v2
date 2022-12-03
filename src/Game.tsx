@@ -52,7 +52,7 @@ export default function Game() {
     return <div className="text-center text-lg my-20">Chargement...</div>;
   if (state.success && game)
     return (
-      <div className="container">
+      <div>
         <div className="-z-10 absolute left-0 h-full w-full -mt-[120px] overflow-hidden">
           <div
             className={`w-full h-full bg-cover blur after:absolute after:left-0 after:top-0 after:w-full after:h-full game-bg`}
