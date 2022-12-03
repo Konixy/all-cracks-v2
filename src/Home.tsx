@@ -62,7 +62,7 @@ export default function Home() {
           </SecondaryButton>
         </div>
       </div>
-      <div className="w-full mt-60 py-20 bg-gradient-to-tr from-green-200  to-blue-200">
+      <div className="w-full mt-80 py-20 bg-gradient-to-tr from-green-200  to-blue-200">
         <h1 className="text-2xl font-semibold text-slate-800">Nos dernières sorties :</h1>
         <div className="flex flex-col md:flex-row items-center justify-evenly lg:mx-10 mt-10">
           {state.success && games
