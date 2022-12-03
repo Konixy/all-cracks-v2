@@ -18,7 +18,7 @@ export default class Footer extends Component {
         {
           name: "Nous contacter",
           type: "href",
-          href: "mailto:contact@spoticordbot.com",
+          href: "mailto:contact@all-cracks.fr",
         },
         { name: "Discord", type: "href", href: config.discordInvite },
         {
