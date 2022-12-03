@@ -16,7 +16,7 @@ ENV NODE_ENV production
 
 EXPOSE 1000
 
-CMD [ "npx", "serve", "-s", "build", "-l", "1000" ]
+CMD [ "npm", "run", "serve" ]
 
 # FROM nginx:alpine
 
