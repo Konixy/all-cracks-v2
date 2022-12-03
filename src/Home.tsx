@@ -40,7 +40,7 @@ export default function Home() {
     height: 240,
   };
   return (
-    <div className="container items-center text-center my-40 w-full">
+    <div className="items-center text-center my-40">
       <div className="w-full m-0">
         <h1 className="text-2xl text-center lg:mx-20">
           Touts vos jeux préférés, gratuits et téléchargable en un seul{" "}
