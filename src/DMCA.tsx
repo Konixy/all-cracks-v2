@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Md from "@uiw/react-markdown-preview";
 import config from './config'
-const DMCAPath = require('./DMCA.md');
 
 export default function DMCA() {
   const [content, setContent] = useState<string>("Chargement...")
   useEffect(() => {
     document.title = `DMCA${config.titleSufix}`
     async function fetchContent() {
-      await fetch(DMCAPath).then((r) => r.text()).then((text) => {
+      await fetch("./DMCA.md").then((r) => r.text()).then((text) => {
         setContent(text.replace(/\${owner}/gm, config.ownerName).replace(/\${discord}/gm, config.discordInvite))
       })
     }
