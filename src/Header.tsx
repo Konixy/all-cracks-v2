@@ -23,7 +23,7 @@ export default class Header extends Component {
       }[];
     }[];
   };
-  props!: { path: string; };
+  declare props: { path: string; };
   constructor(props: {path: string}) {
     super(props);
     this.state = {
