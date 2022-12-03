@@ -5,7 +5,8 @@
 /.pnp
 .pnp.js
 package.json
-config.js
+config.ts
+config.old.ts
 
 # testing
 /coverage
