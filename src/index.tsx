@@ -34,10 +34,10 @@ const routes: RouteElement[] = [
     path: "/dmca",
     element: DMCA,
   },
-  {
-    path: "/admin",
-    element: Admin,
-  },
+  // {
+  //   path: "/admin",
+  //   element: Admin,
+  // },
   {
     path: "*",
     element: NotFound,

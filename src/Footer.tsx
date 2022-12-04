@@ -26,7 +26,7 @@ export default class Footer extends Component {
           type: "link",
           href: "/dmca",
         },
-        { name: "Admin Panel", type: "link", href: "/admin" },
+        // { name: "Admin Panel", type: "link", href: "/admin" },
       ],
     };
   }
