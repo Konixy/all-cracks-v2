@@ -78,7 +78,7 @@ export default function Game() {
             <iframe
               width="664"
               height="374"
-              src={`https://www.youtube.com/embed/${game.videoId}?controls=0&rel=0&amp;autoplay=1&mute=1`}
+              src={`https://www.youtube.com/embed/${game.videoId}?controls=0&rel=0&amp;autoplay=1&mute=1&loop=1&showinfo=0&amp;playlist=${game.videoId}`}
               title={game.name}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
               className="rounded-xl hidden lg:block"
