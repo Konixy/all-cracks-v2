@@ -236,7 +236,7 @@ export default function GamesList() {
 
   return (
     <main className="items-center mt-16 mb-10">
-      <div className="container flex flex-col justify-center items-center mb-5 last:mb-0">
+      <div className="flex flex-col justify-center items-center mb-5 last:mb-0">
         <Games currentGames={currentItems} state={state} retry={loadGames} />
       </div>
       <ReactPaginate
