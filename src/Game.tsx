@@ -111,7 +111,7 @@ export default function Game() {
             <div>
               <div
                 data-tip={`Ce fichier requiert ${
-                  game.crackDlLinkType === "rar" ? "WinRar" : "µTorrent"
+                  game.crackDlLinkType === "rar" ? "WinRar" : "µTorrent" 
                 } pour être téléchargé et installé`}
                 data-for="globalTip"
                 className="m-0"
