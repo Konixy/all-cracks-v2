@@ -105,7 +105,7 @@ export default class Header extends Component {
     return (
       <>
         <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-          <div className="w-[108rem] flex-none flex justify-end">
+          <div className="w-[108rem] flex-none justify-end hidden md:flex">
             <picture>
               <source
                 srcSet="https://tailwindcss.com/_next/static/media/docs-dark@30.1a9f8cbf.avif"
@@ -114,7 +114,7 @@ export default class Header extends Component {
               <img
                 src="https://tailwindcss.com/_next/static/media/docs-dark@tinypng.1bbe175e.png"
                 alt=""
-                className="w-[90rem] flex-none max-w-none block"
+                className="w-[90rem] flex-none max-w-none"
                 decoding="async"
               />
             </picture>

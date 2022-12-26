@@ -44,10 +44,9 @@ export default function Game() {
       setState({ loading: true, success: false });
       fetchGame();
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId]);
 
-  
   if (state.loading)
     return <div className="text-center text-lg my-20">Chargement...</div>;
   if (state.success && game)
@@ -111,7 +110,7 @@ export default function Game() {
             <div>
               <div
                 data-tip={`Ce fichier requiert ${
-                  game.crackDlLinkType === "rar" ? "WinRar" : "µTorrent" 
+                  game.crackDlLinkType === "rar" ? "WinRar" : "µTorrent"
                 } pour être téléchargé et installé`}
                 data-for="globalTip"
                 className="m-0"
@@ -164,7 +163,6 @@ export default function Game() {
       </div>
     );
   else if (state.success && !state.loading && !game)
-    return <div className="text-center text-lg my-20">Aucun jeu trouvé</div>;
-  else
-    return <NoConnection retry={() => fetchGame()} />;
+    return <div className="text-center text-lg my-20">Jeu introuvable</div>;
+  else return <NoConnection retry={() => fetchGame()} />;
 }

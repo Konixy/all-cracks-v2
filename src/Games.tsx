@@ -209,6 +209,7 @@ export default function GamesList() {
   }, [games, itemOffset, itemsPerPage]);
 
   function loadGames() {
+    setState({ loading: true, success: false });
     axios
       .get(`${config.backendPath}/api/games`)
       .then((r: AxiosResponse<APIResponse>) => {

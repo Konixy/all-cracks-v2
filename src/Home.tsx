@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="items-center text-center my-40">
       <div className="w-full m-0">
-        <h1 className="text-2xl text-center lg:mx-20">
+        <h1 className="text-2xl text-center mx-4 lg:mx-20">
           Touts vos jeux préférés, gratuits et téléchargable en un seul{" "}
           <span className="text-blue-500 underline">click</span>
           <i className="fa-solid fa-arrow-pointer absolute translate-y-5 -translate-x-3 text-black text-shadow-white"></i>{" "}

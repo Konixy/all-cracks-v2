@@ -1,6 +1,6 @@
 {
   "short_name": "All-Cracks.fr",
-  "name": "All-Cracks.fr tout vos cracks en un site",
+  "name": "All-Cracks.fr, tous vos jeux préférés, gratuit, et en un seul site !",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +10,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#000"
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a"
 }
