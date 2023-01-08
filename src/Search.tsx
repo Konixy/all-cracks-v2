@@ -37,7 +37,6 @@ export default function Search() {
       if (target?.value.length <= 0) return closeSearch();
       else openSearch(target?.value);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // function submitSearch(event: SubmitElement) {
@@ -82,7 +81,7 @@ export default function Search() {
             hitComponent={function HitComponent({ hit }: Hit) {
               const input = document.querySelector('.search-input input[type="submit"]');
               useEffect(() => {
-                input?.addEventListener('submit', (e) => {
+                input?.addEventListener('submit', () => {
                   if (hit.__position === 0) {
                     console.log('the first hit is', hit);
                   }

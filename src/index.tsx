@@ -9,7 +9,6 @@ import Games from './Games';
 import Game from './Game';
 import NotFound from './NotFound';
 import DMCA from './DMCA';
-import Admin from './Admin';
 import { UserContext } from './User.context';
 import { APIUser } from './Types';
 

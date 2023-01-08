@@ -44,14 +44,13 @@ export default function Game() {
       setState({ loading: true, success: false });
       fetchGame();
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId]);
 
   if (state.loading) return <div className="my-20 text-center text-lg">Chargement...</div>;
   if (state.success && game)
     return (
       <div>
-        <div className="absolute left-0 -z-10 -mt-[120px] h-full w-full overflow-hidden">
+        <div className="absolute left-0 -z-10 mt-[-120px] h-full w-full overflow-hidden">
           <div
             className={`game-bg h-full w-full bg-cover blur after:absolute after:left-0 after:top-0 after:h-full after:w-full`}
             style={{
@@ -76,7 +75,7 @@ export default function Game() {
           {game.tutorial ? (
             <button onClick={showTutorial} className="mx-5 mt-20 rounded-lg bg-[#0d1117] px-8 py-6 sm:mx-10 md:mx-20 lg:mx-40">
               <div className="text-lg">
-                Tutoriel d'installation <i className="fa-solid fa-chevron-down tutorial-icon ml-2"></i>
+                Tutoriel d&apos;installation <i className="fa-solid fa-chevron-down tutorial-icon ml-2"></i>
               </div>
               <Md className="text-md game-tuto mt-5 hidden text-left" source={game.tutorial} />
             </button>

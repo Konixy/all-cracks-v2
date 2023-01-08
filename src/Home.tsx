@@ -4,20 +4,21 @@ import config from './config';
 import { PrimaryButton, SecondaryButton } from './Util';
 import Tilt from 'react-tilted';
 import { APIGame, APIResponse } from './Types';
+// eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
 import ContentLoader from 'react-content-loader';
-import Vibrant from 'node-vibrant';
+// import Vibrant from 'node-vibrant';
 
 export default function Home() {
   const [state, setState] = useState({ loading: true, success: false });
   const [games, setGames] = useState<APIGame[] | null>(null);
 
-  async function getVibrantColor(imageUrl: string | undefined) {
-    const url = 'https://taxreform.dof.gov.ph/wp-content/uploads/2019/07/no-thumbnail-medium.png';
-    return (await new Vibrant(url, {}).getPalette()).Vibrant?.hex;
-  }
+  // async function getVibrantColor(imageUrl: string | undefined) {
+  //   const url = 'https://taxreform.dof.gov.ph/wp-content/uploads/2019/07/no-thumbnail-medium.png';
+  //   return (await new Vibrant(url, {}).getPalette()).Vibrant?.hex;
+  // }
 
-  getVibrantColor('https://images.igdb.com/igdb/image/upload/t_original/co52vm.jpg').then((e) => console.log(e));
+  // getVibrantColor('https://images.igdb.com/igdb/image/upload/t_original/co52vm.jpg').then((e) => console.log(e));
 
   function loadGames() {
     setState({ loading: true, success: false });
@@ -64,7 +65,7 @@ export default function Home() {
         <div className="mt-10 flex flex-col items-center justify-evenly md:flex-row lg:mx-10">
           {state.success && games ? (
             games.map((e) => (
-              <div className="flex flex-row bg-slate-500/50">
+              <div key={e._id} className="flex flex-row bg-slate-500/50">
                 <div className="block w-[180px]">
                   <Link to={`/game/${e._id}`} className="w-[180px]">
                     <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
@@ -129,7 +130,7 @@ export default function Home() {
         <div className="mt-10 text-lg text-slate-300">
           Tout nos jeux sont téstés et approuvés par notre équipe.
           <br />
-          <span className="mt-2 text-3xl text-white">0%</span> de chance d'avoir un virus
+          <span className="mt-2 text-3xl text-white">0%</span> de chance d&apos;avoir un virus
         </div>
       </div>
     </div>

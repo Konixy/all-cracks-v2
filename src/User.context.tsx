@@ -6,7 +6,9 @@ export const UserContext = createContext<{
   user: null | APIUser;
 }>({
   user: null,
-  setUser: () => {},
+  setUser: () => {
+    return;
+  },
 });
 
 export const useUser = () => useContext(UserContext);

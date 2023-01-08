@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import config from './config';
 import ContentLoader from 'react-content-loader';
 import Tilt from 'react-tilted';
+// eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
 import { classNames, NoConnection } from './Util';
 import ReactTooltip from 'react-tooltip';
@@ -150,7 +151,7 @@ export default function GamesList() {
         setState({ loading: false, success: true });
         setGames(r.data.games.sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()));
       })
-      .catch((err) => {
+      .catch(() => {
         console.log('an error occured');
         setState({ loading: false, success: false });
       });
