@@ -7,6 +7,8 @@ import { APIGame, APIResponse } from './Types';
 // eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
 import ContentLoader from 'react-content-loader';
+import { FastAverageColor } from 'fast-average-color';
+const fac = new FastAverageColor();
 
 export default function Home() {
   const [state, setState] = useState({ loading: true, success: false });
@@ -18,6 +20,22 @@ export default function Home() {
   // }
 
   // getVibrantColor('https://images.igdb.com/igdb/image/upload/t_original/co52vm.jpg').then((e) => console.log(e));
+
+  useEffect(() => {
+    if (games) {
+      games.forEach((game) => {
+        const gameId = game._id;
+        const image = document.getElementById(gameId + '-image') as HTMLImageElement;
+
+        const color = fac.getColor(image, { mode: 'speed', crossOrigin: 'Anonymous', defaultColor: [0, 0, 0, 100], width: 180, height: 240 });
+        color;
+        const container = document.getElementById(gameId + '-container') as HTMLDivElement | null;
+        console.log(container);
+        container ? (container.style.backgroundColor = color.rgba) : '';
+        console.log(color.hex);
+      });
+    }
+  }, [games]);
 
   function loadGames() {
     setState({ loading: true, success: false });
@@ -67,7 +85,7 @@ export default function Home() {
               (
                 e, // style={{ backgroundColor: getVibrantColor(e.coverUrl).then((e) => e) }}
               ) => (
-                <div key={e._id} className="flex flex-row rounded-lg">
+                <div key={e._id} className="flex flex-row rounded-lg" id={e._id + '-container'}>
                   <div className="block w-[180px]">
                     <Link to={`/game/${e._id}`} className="w-[180px]">
                       <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
@@ -78,6 +96,7 @@ export default function Home() {
                           height="240px"
                           className="game-card-img tilt relative h-[240px] w-[180px] rounded-lg"
                           data-tilt
+                          id={e._id + '-image'}
                         />
                       </Tilt>
                     </Link>
