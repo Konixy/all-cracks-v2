@@ -21,7 +21,7 @@ interface AdditionnalLink {
   _id: string;
   name: string;
   link: string;
-  linkType: "rar" | "torrent";
+  linkType: 'rar' | 'torrent';
 }
 
 export interface APIResponse {
