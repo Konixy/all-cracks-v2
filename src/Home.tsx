@@ -7,15 +7,14 @@ import { APIGame, APIResponse } from './Types';
 // eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
 import ContentLoader from 'react-content-loader';
-// import Vibrant from 'node-vibrant';
 
 export default function Home() {
   const [state, setState] = useState({ loading: true, success: false });
   const [games, setGames] = useState<APIGame[] | null>(null);
 
-  // async function getVibrantColor(imageUrl: string | undefined) {
-  //   const url = 'https://taxreform.dof.gov.ph/wp-content/uploads/2019/07/no-thumbnail-medium.png';
-  //   return (await new Vibrant(url, {}).getPalette()).Vibrant?.hex;
+  // async function getVibrantColor(imageUrl: string | undefined): Promise<string | undefined> {
+  //   const url = imageUrl || 'https://taxreform.dof.gov.ph/wp-content/uploads/2019/07/no-thumbnail-medium.png';
+  //   return (await Vibrant.from(url).getPalette()).palette.Vibrant?.hex;
   // }
 
   // getVibrantColor('https://images.igdb.com/igdb/image/upload/t_original/co52vm.jpg').then((e) => console.log(e));
@@ -64,33 +63,37 @@ export default function Home() {
         <h1 className="text-2xl font-semibold text-slate-800">Nos dernières sorties :</h1>
         <div className="mt-10 flex flex-col items-center justify-evenly md:flex-row lg:mx-10">
           {state.success && games ? (
-            games.map((e) => (
-              <div key={e._id} className="flex flex-row bg-slate-500/50">
-                <div className="block w-[180px]">
-                  <Link to={`/game/${e._id}`} className="w-[180px]">
-                    <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
-                      <img
-                        src={e.coverUrl}
-                        alt={e.name}
-                        width="180px"
-                        height="240px"
-                        className="game-card-img tilt relative h-[240px] w-[180px] rounded-lg"
-                        data-tilt
-                      />
-                    </Tilt>
-                  </Link>
+            games.map(
+              (
+                e, // style={{ backgroundColor: getVibrantColor(e.coverUrl).then((e) => e) }}
+              ) => (
+                <div key={e._id} className="flex flex-row rounded-lg">
+                  <div className="block w-[180px]">
+                    <Link to={`/game/${e._id}`} className="w-[180px]">
+                      <Tilt max={12.5} speed={400} scale={1.07} reverse={true}>
+                        <img
+                          src={e.coverUrl}
+                          alt={e.name}
+                          width="180px"
+                          height="240px"
+                          className="game-card-img tilt relative h-[240px] w-[180px] rounded-lg"
+                          data-tilt
+                        />
+                      </Tilt>
+                    </Link>
+                  </div>
+                  <div className="relative flex flex-col whitespace-normal px-10 py-6 md:justify-between">
+                    <Link to={`/game/${e._id}`} className="text-lg">
+                      {e.name}
+                    </Link>
+                    <p className="text-description text-sm">{e.description}</p>
+                    <Link to={`/game/${e._id}`} className="rounded-lg bg-slate-200 px-2 py-1 text-black">
+                      Découvrir <i className="fa-solid fa-arrow-right"></i>
+                    </Link>
+                  </div>
                 </div>
-                <div className="relative flex flex-col whitespace-normal px-10 py-6 md:justify-between">
-                  <Link to={`/game/${e._id}`} className="text-lg">
-                    {e.name}
-                  </Link>
-                  <p className="text-description text-sm">{e.description}</p>
-                  <Link to={`/game/${e._id}`} className="rounded-lg bg-slate-200 px-2 py-1 text-black">
-                    Découvrir <i className="fa-solid fa-arrow-right"></i>
-                  </Link>
-                </div>
-              </div>
-            ))
+              ),
+            )
           ) : state.loading ? (
             [1, 2].map((e) => (
               <div className="flex h-[240px] flex-row rounded-lg bg-slate-600/50" key={e}>
