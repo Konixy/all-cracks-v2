@@ -25,12 +25,12 @@ export default function Home() {
     if (games) {
       games.forEach((game) => {
         const gameId = game._id;
-        const image = document.getElementById(gameId + '-image') as HTMLImageElement;
+        const image = new Image();
+        image.src = 'http://cors-anywhere.herokuapp.com/' + game.coverUrl;
 
         const color = fac.getColor(image, { mode: 'speed', crossOrigin: 'Anonymous', defaultColor: [0, 0, 0, 100], width: 180, height: 240 });
         color;
         const container = document.getElementById(gameId + '-container') as HTMLDivElement | null;
-        console.log(container);
         container ? (container.style.backgroundColor = color.rgba) : '';
         console.log(color.hex);
       });
