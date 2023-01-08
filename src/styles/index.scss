@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +7,7 @@ $bgColor: #1f2937;
 
 @font-face {
   font-family: GoodTime;
-  src: url("/GoodTiming.ttf") format("opentype");
+  src: url('/GoodTiming.ttf') format('opentype');
 }
 
 .bg-slate-900 {
@@ -54,8 +54,7 @@ body {
 }
 
 .text-shadow-white {
-  text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 1px 1px #fff,
-    -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+  text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff, 1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
 }
 
 .search-input {
@@ -80,12 +79,9 @@ body {
 }
 
 .search-input input {
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
-    0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   display: block;
   padding: 0.5rem;
   padding-left: 2rem;
@@ -107,16 +103,13 @@ body {
 }
 
 .search-input input:focus {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
-    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
-    calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
-    var(--tw-shadow, 0 0 #0000);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
   --tw-ring-color: #38bdf8;
 }
 
-input[type="search"]::-webkit-search-cancel-button {
+input[type='search']::-webkit-search-cancel-button {
   display: none;
 }
 
@@ -167,11 +160,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .menu-shadow {
-  background-image: linear-gradient(
-    rgba(15, 23, 42, 1) 0%,
-    rgba(15, 23, 42, 1) 80%,
-    rgba(15, 23, 42, 0) 100%
-  );
+  background-image: linear-gradient(rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 1) 80%, rgba(15, 23, 42, 0) 100%);
 }
 
 .tutorial-icon {

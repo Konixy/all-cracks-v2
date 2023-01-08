@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./styles/index.scss";
-import Home from "./Home";
-import Header from "./Header";
-import Footer from "./Footer";
-import Games from "./Games";
-import Game from "./Game";
-import NotFound from "./NotFound";
-import DMCA from "./DMCA";
-import Admin from "./Admin";
-import { UserContext } from "./User.context";
-import { APIUser } from "./Types";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './styles/index.scss';
+import Home from './Home';
+import Header from './Header';
+import Footer from './Footer';
+import Games from './Games';
+import Game from './Game';
+import NotFound from './NotFound';
+import DMCA from './DMCA';
+import Admin from './Admin';
+import { UserContext } from './User.context';
+import { APIUser } from './Types';
 
 interface RouteElement {
   path: string;
@@ -21,17 +21,17 @@ interface RouteElement {
 }
 
 const routes: RouteElement[] = [
-  { path: "/", element: Home },
+  { path: '/', element: Home },
   {
-    path: "/games",
+    path: '/games',
     element: Games,
   },
   {
-    path: "/game/:gameId",
+    path: '/game/:gameId',
     element: Game,
   },
   {
-    path: "/dmca",
+    path: '/dmca',
     element: DMCA,
   },
   // {
@@ -39,7 +39,7 @@ const routes: RouteElement[] = [
   //   element: Admin,
   // },
   {
-    path: "*",
+    path: '*',
     element: NotFound,
     noFooter: true,
   },
@@ -49,7 +49,7 @@ function App() {
   const [user, setUser] = useState<APIUser | null>(null);
   return (
     <Router>
-      <UserContext.Provider value={{user, setUser}}>
+      <UserContext.Provider value={{ user, setUser }}>
         <Routes>
           {routes.map((route) => (
             <Route
@@ -70,7 +70,5 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);

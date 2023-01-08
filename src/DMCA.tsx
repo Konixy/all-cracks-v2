@@ -16,5 +16,5 @@ export default function DMCA() {
   //   fetchContent()
   // }, [])
 
-  return <Md className="mx-4 sm:mx-10 md:mx-20 my-10 px-8 py-6 rounded-lg" source={DMCAContent.replace(/\\n/g, "\n")} />;
+  return <Md className="mx-4 my-10 rounded-lg px-8 py-6 sm:mx-10 md:mx-20" source={DMCAContent.replace(/\\n/g, "\n")} />;
 }

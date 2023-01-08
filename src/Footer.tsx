@@ -1,30 +1,30 @@
-import { Component } from "react";
-import config from "./config";
-import { Link } from "react-router-dom";
+import { Component } from 'react';
+import config from './config';
+import { Link } from 'react-router-dom';
 
 interface Nav {
   name: string;
   href: string;
-  type: "href" | "link";
+  type: 'href' | 'link';
 }
 
 export default class Footer extends Component {
-  state: { nav: Nav[], style: string };
+  state: { nav: Nav[]; style: string };
   constructor(props: {} | Readonly<{}>) {
     super(props);
     this.state = {
-      style: "text-slate-400 hover:text-white transition-all mb-2 md:mb-0",
+      style: 'text-slate-400 hover:text-white transition-all mb-2 md:mb-0',
       nav: [
         {
-          name: "Nous contacter",
-          type: "href",
-          href: "mailto:contact@all-cracks.fr",
+          name: 'Nous contacter',
+          type: 'href',
+          href: 'mailto:contact@all-cracks.fr',
         },
-        { name: "Discord", type: "href", href: config.discordInvite },
+        { name: 'Discord', type: 'href', href: config.discordInvite },
         {
           name: "DMCA (conditions d'utilisation)",
-          type: "link",
-          href: "/dmca",
+          type: 'link',
+          href: '/dmca',
         },
         // { name: "Admin Panel", type: "link", href: "/admin" },
       ],
@@ -33,28 +33,26 @@ export default class Footer extends Component {
   render() {
     return (
       <footer>
-        <ul className="flex flex-col items-center md:flex-row list-none justify-between lg:justify-evenly mx-10 sm:mx-20 md:mx-40">
+        <ul className="mx-10 flex list-none flex-col items-center justify-between sm:mx-20 md:mx-40 md:flex-row lg:justify-evenly">
           {this.state.nav.map((e) =>
-            e.type === "href" ? (
+            e.type === 'href' ? (
               <li key={e.name}>
-                <a href={e.href} rel="noreferrer" target="_blank" className={this.state.style}>{e.name}</a>
+                <a href={e.href} rel="noreferrer" target="_blank" className={this.state.style}>
+                  {e.name}
+                </a>
               </li>
             ) : (
               <li key={e.name}>
-                <Link to={e.href} className={this.state.style}>{e.name}</Link>
+                <Link to={e.href} className={this.state.style}>
+                  {e.name}
+                </Link>
               </li>
-            )
+            ),
           )}
         </ul>
-        <div className="text-center my-10">
-          <i className="fa-regular fa-copyright"></i> All-Cracks.fr 2022. Tout
-          droits réservés. Développé par la{" "}
-          <a
-            href={config.nightCorpInvite}
-            className="text-blue-400 hover:underline"
-            target="_blank"
-            rel="noreferrer"
-          >
+        <div className="my-10 text-center">
+          <i className="fa-regular fa-copyright"></i> All-Cracks.fr 2022. Tout droits réservés. Développé par la{' '}
+          <a href={config.nightCorpInvite} className="text-blue-400 hover:underline" target="_blank" rel="noreferrer">
             NightCorp
           </a>
         </div>

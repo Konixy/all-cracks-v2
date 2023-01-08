@@ -1,15 +1,9 @@
-import React, { FormEvent, useState, useEffect } from "react";
-import algoliasearch from "algoliasearch/lite";
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Configure,
-  Highlight
-} from "react-instantsearch-hooks-web";
-import { Link, useSearchParams } from "react-router-dom";
-import config from "./config";
-import { Oval } from "react-loader-spinner";
+import React, { FormEvent, useState, useEffect } from 'react';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, SearchBox, Hits, Configure, Highlight } from 'react-instantsearch-hooks-web';
+import { Link, useSearchParams } from 'react-router-dom';
+import config from './config';
+import { Oval } from 'react-loader-spinner';
 
 const searchClient = algoliasearch(config.searchId, config.searchKey);
 
@@ -32,20 +26,20 @@ export default function Search() {
   const [state, setState] = useState<boolean>(false);
   const [params, setParams] = useSearchParams();
   useEffect(() => {
-    const searchInput: HTMLInputElement | null = document.querySelector(".search-input");
+    const searchInput: HTMLInputElement | null = document.querySelector('.search-input');
     searchInput?.addEventListener('focusout', (event: FocusEvent) => {
-      const target: (HTMLInputElement & EventTarget) | null = event.target as (HTMLInputElement & EventTarget);
-      if(target?.value.length <= 0) return closeSearch();
-      closeSearch()
-    })
+      const target: (HTMLInputElement & EventTarget) | null = event.target as HTMLInputElement & EventTarget;
+      if (target?.value.length <= 0) return closeSearch();
+      closeSearch();
+    });
     searchInput?.addEventListener('focusin', (event: FocusEvent) => {
-      const target: (HTMLInputElement & EventTarget) | null = event.target as (HTMLInputElement & EventTarget);
-      if(target?.value.length <= 0) return closeSearch();
+      const target: (HTMLInputElement & EventTarget) | null = event.target as HTMLInputElement & EventTarget;
+      if (target?.value.length <= 0) return closeSearch();
       else openSearch(target?.value);
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // function submitSearch(event: SubmitElement) {
   //   const value = event.target?.value
 
@@ -66,7 +60,7 @@ export default function Search() {
   }
   function closeSearch() {
     setState(false);
-    setParams("");
+    setParams('');
   }
   return (
     <InstantSearch searchClient={searchClient} indexName="Games">
@@ -77,40 +71,28 @@ export default function Search() {
         onInput={searchInput}
         translate="yes"
         // onSubmit={submitSearch}
-        defaultValue={params.get("search") || ""}
-        submitIconComponent={() => (
-          <i className="z-20 fa-solid fa-magnifying-glass submit-icon text-gray-500"></i>
-        )}
-        resetIconComponent={() => (
-          <i className="z-20 fa-solid fa-xmark search-reset text-gray-500"></i>
-        )}
-        loadingIconComponent={() => (
-          <Oval
-            color="black"
-            secondaryColor="black"
-            wrapperClass="search-loader"
-            width="1rem"
-            height="1rem"
-          />
-        )}
+        defaultValue={params.get('search') || ''}
+        submitIconComponent={() => <i className="fa-solid fa-magnifying-glass submit-icon z-20 text-gray-500"></i>}
+        resetIconComponent={() => <i className="fa-solid fa-xmark search-reset z-20 text-gray-500"></i>}
+        loadingIconComponent={() => <Oval color="black" secondaryColor="black" wrapperClass="search-loader" width="1rem" height="1rem" />}
       />
       {state ? (
-        <div className="absolute flex flex-col left-0 top-12 bg-slate-700/75 p-4 rounded-md">
+        <div className="absolute left-0 top-12 flex flex-col rounded-md bg-slate-700/75 p-4">
           <Hits
             hitComponent={function HitComponent({ hit }: Hit) {
               const input = document.querySelector('.search-input input[type="submit"]');
               useEffect(() => {
-                input?.addEventListener("submit", e => {
-                  if(hit.__position === 0) {
-                    console.log('the first hit is', hit)
+                input?.addEventListener('submit', (e) => {
+                  if (hit.__position === 0) {
+                    console.log('the first hit is', hit);
                   }
-                })
+                });
               }, []);
               return (
-                <Link to={`/game/${hit._id}`} className="z-50 mt-10 cursor-pointer flex flex-row hover:bg-slate-600/75" onClick={closeSearch}>
+                <Link to={`/game/${hit._id}`} className="z-50 mt-10 flex cursor-pointer flex-row hover:bg-slate-600/75" onClick={closeSearch}>
                   <img src={hit.coverUrl} alt={hit.name} width="90" height="128" />
                   <div>
-                  <Highlight className="ml-2 text-ellipsis" attribute="name" hit={hit}></Highlight>
+                    <Highlight className="ml-2 text-ellipsis" attribute="name" hit={hit}></Highlight>
                     <div className="bg-white text-black">Accéder au jeu</div>
                   </div>
                 </Link>
@@ -119,7 +101,7 @@ export default function Search() {
           />
         </div>
       ) : (
-        ""
+        ''
       )}
     </InstantSearch>
     // <div>
